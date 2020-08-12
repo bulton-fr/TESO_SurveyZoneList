@@ -42,10 +42,11 @@ end
 
 function obtainNewZoneInfo(itemZoneName)
     return {
-        name     = itemZoneName,
-        nbUnique = 0,
-        nbSurvey = 0,
-        list     = {}
+        name        = itemZoneName,
+        nameEscaped = SurveyZone.ItemSort:espaceLuaStr(itemZoneName:lower()),
+        nbUnique    = 0,
+        nbSurvey    = 0,
+        list        = {}
     }
 end
 

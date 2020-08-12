@@ -54,6 +54,33 @@ function SurveyZone.ItemSort:updateZone()
     end
 end
 
+--[[
+-- Escape string to use it in pattern
+-- Find at https://stackoverflow.com/a/6707799
+--
+-- @param String str The string to escape
+--
+-- @return String
+--]]
+function SurveyZone.ItemSort:espaceLuaStr(str)
+    local matches = {
+        ["^"] = "%^";
+        ["$"] = "%$";
+        ["("] = "%(";
+        [")"] = "%)";
+        ["%"] = "%%";
+        ["."] = "%.";
+        ["["] = "%[";
+        ["]"] = "%]";
+        ["*"] = "%*";
+        ["+"] = "%+";
+        ["-"] = "%-";
+        ["?"] = "%?";
+    }
+
+    return str:gsub(".", matches)
+end
+
 function SurveyZone.ItemSort:exec()
     table.sort(SurveyZone.Collect.orderedList, self.sortZoneList)
 end
@@ -62,9 +89,11 @@ function SurveyZone.ItemSort.sortZoneList(left, right)
     local sortOrder = SurveyZone.ItemSort.savedVars.order
 
     if SurveyZone.ItemSort:isKeepCurrentZoneFirst() == true then
-        if string.find(SurveyZone.ItemSort.currentZoneName, left.name:lower()) then
+        local currentName = SurveyZone.ItemSort.currentZoneName
+
+        if string.find(currentName, left.nameEscaped) then
             return true
-        elseif string.find(SurveyZone.ItemSort.currentZoneName, right.name:lower()) then
+        elseif string.find(currentName, right.nameEscaped) then
             return false
         end
     end
