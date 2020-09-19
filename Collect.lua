@@ -33,6 +33,12 @@ function SurveyZone.Collect:readItem(slotIdx)
     local itemName     = zo_strformat("<<1>>", GetItemName(BAG_BACKPACK, slotIdx))
     local itemZoneName = itemName:match(".* : (.*)")
 
+    -- Some survey map name not corresponding to the pattern, so a security to
+    -- avoid error.
+    if itemZoneName == nil then
+        return nil
+    end
+
     if itemZoneName:find("I$") ~= nil or itemZoneName:find("V$") ~= nil or itemZoneName:find("X$") ~= nil then
         itemZoneName = itemZoneName:match("(.*) %a+")
     end
