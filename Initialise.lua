@@ -19,8 +19,6 @@ function SurveyZone:Initialise()
         SurveyZone.savedVariables.sort = {}
     end
 
-    ZO_CreateStringId("SI_BINDING_NAME_SURVEYZONE_TOGGLE", "Toggle window")
-
     SurveyZone.Settings:init()
     SurveyZone.GUI:init()
     SurveyZone.ItemSort:init()

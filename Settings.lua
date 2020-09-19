@@ -34,7 +34,7 @@ end
 function SurveyZone.Settings:buildGUILocked()
     return {
         type    = "checkbox",
-        name    = "Lock UI",
+        name    = GetString(SI_SURVEYZONE_SETTINGS_LOCKUI),
         getFunc = function()
             return SurveyZone.GUI:isLocked()
         end,
@@ -47,7 +47,7 @@ end
 function SurveyZone.Settings:buildDisplayedWithWorldMap()
     return {
         type    = "checkbox",
-        name    = "Displayed with the world map",
+        name    = GetString(SI_SURVEYZONE_SETTINGS_DISPLAYED_WITH_WM),
         getFunc = function()
             return SurveyZone.GUI:isDisplayWithWMap()
         end,
@@ -60,7 +60,7 @@ end
 function SurveyZone.Settings:buildCurrentZoneFirst()
     return {
         type    = "checkbox",
-        name    = "Keep the current zone first",
+        name    = GetString(SI_SURVEYZONE_SETTINGS_CURRENT_ZONE_FIRST),
         getFunc = function()
             return SurveyZone.ItemSort:isKeepCurrentZoneFirst()
         end,
@@ -73,10 +73,10 @@ end
 function SurveyZone.Settings:buildDisplayItemText()
     return {
         type        = "editbox",
-        name        = "Text format used for each zone",
+        name        = GetString(SI_SURVEYZONE_SETTINGS_ITEM_TEXT_FORMAT),
         isMultiline = false,
         isExtraWide = false,
-        tooltip     = "You can use the following placeholders in the text format, which will be replaced with the value information :\n<<1>> Zone's name\n<<2>> number of unique survey in the zone\n<<3>>total number of survey in the zone\n\nDefault value is <<1>> : <<2>> - <<3>>",
+        tooltip     = GetString(SI_SURVEYZONE_SETTINGS_ITEM_TEXT_FORMAT_DESC),
         getFunc     = function()
             return SurveyZone.GUI:obtainDisplayItemText()
         end,
@@ -90,7 +90,11 @@ function SurveyZone.Settings:buildSort(pos)
     return {
         type          = "dropdown",
         name          = zo_strformat("sort #<<1>>", pos),
-        choices       = {"zone name", "number of unique survey", "total number of survey"},
+        choices       = {
+            GetString(SI_SURVEYZONE_SETTINGS_SORT_ZONE_NAME),
+            GetString(SI_SURVEYZONE_SETTINGS_SORT_NB_UNIQUE),
+            GetString(SI_SURVEYZONE_SETTINGS_SORT_NB_SURVEY),
+        },
         choicesValues = {"zoneName", "nbUnique", "nbSurvey"},
         getFunc       = function()
             return SurveyZone.ItemSort:obtainOrder()[pos]

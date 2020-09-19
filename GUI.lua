@@ -76,7 +76,7 @@ function SurveyZone.GUI:build()
 
     local titleLabel = WindowManager:CreateControl("titleLabel", self.title, CT_LABEL)
     titleLabel:SetAnchor(TOPLEFT, self.title, TOPLEFT, 5, 3)
-    titleLabel:SetText("Survey List")
+    titleLabel:SetText(GetString(SI_SURVEYZONE_LIST_TITLE))
     titleLabel:SetFont("ZoFontGame")
 end
 
