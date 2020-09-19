@@ -31,7 +31,7 @@ function SurveyZone.Collect:readItem(slotIdx)
     end
 
     local itemName     = zo_strformat("<<1>>", GetItemName(BAG_BACKPACK, slotIdx))
-    local itemZoneName = itemName:match(".* : (.*)")
+    local itemZoneName = itemName:match(".*: (.*)")
 
     -- Some survey map name not corresponding to the pattern, so a security to
     -- avoid error.
