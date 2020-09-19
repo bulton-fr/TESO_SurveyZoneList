@@ -40,6 +40,10 @@ function SurveyZone.GUI:initSavedVarsValues()
     if self.savedVars.displayWithWMap == nil then
         self.savedVars.displayWithWMap = false
     end
+
+    if self.savedVars.displayItemText == nil then
+        self.savedVars.displayItemText = "<<1>> : <<2>> - <<3>>"
+    end
 end
 
 function SurveyZone.GUI:build()
@@ -111,6 +115,15 @@ function SurveyZone.GUI:defineDisplayWithWMap(value)
     else
         SCENE_MANAGER:GetScene("worldMap"):RemoveFragment(self.fragment)
     end
+end
+
+function SurveyZone.GUI:obtainDisplayItemText()
+    return self.savedVars.displayItemText
+end
+
+function SurveyZone.GUI:defineDisplayItemText(value)
+    self.savedVars.displayItemText = value
+    self:refreshAll()
 end
 
 --[[

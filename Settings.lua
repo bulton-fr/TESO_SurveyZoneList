@@ -18,6 +18,7 @@ function SurveyZone.Settings:build()
         self:buildGUILocked(),
         self:buildDisplayedWithWorldMap(),
         self:buildCurrentZoneFirst(),
+        self:buildDisplayItemText(),
         {
             type = "header",
             name = "Sort"
@@ -65,6 +66,22 @@ function SurveyZone.Settings:buildCurrentZoneFirst()
         end,
         setFunc = function(value)
             SurveyZone.ItemSort:defineKeepCurrentZoneFirst(value)
+        end,
+    }
+end
+
+function SurveyZone.Settings:buildDisplayItemText()
+    return {
+        type        = "editbox",
+        name        = "Text format used for each zone",
+        isMultiline = false,
+        isExtraWide = false,
+        tooltip     = "You can use the following placeholders in the text format, which will be replaced with the value information :\n<<1>> Zone's name\n<<2>> number of unique survey in the zone\n<<3>>total number of survey in the zone\n\nDefault value is <<1>> : <<2>> - <<3>>",
+        getFunc     = function()
+            return SurveyZone.GUI:obtainDisplayItemText()
+        end,
+        setFunc     = function(value)
+            return SurveyZone.GUI:defineDisplayItemText(value)
         end,
     }
 end

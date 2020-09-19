@@ -58,7 +58,7 @@ end
 
 function SurveyZone.GUIItem:updateText()
     self.uiLabel:SetText(zo_strformat(
-        "<<1>> : <<2>> - <<3>>",
+        SurveyZone.GUI:obtainDisplayItemText(),
         self.zoneName,
         self.zoneInfo.nbUnique,
         self.zoneInfo.nbSurvey
