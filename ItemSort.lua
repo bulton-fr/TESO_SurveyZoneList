@@ -41,7 +41,7 @@ function SurveyZone.ItemSort:defineKeepCurrentZoneFirst(value)
     SurveyZone.GUI:refreshAll()
 end
 
-function SurveyZone.ItemSort:updateZone()
+function SurveyZone.ItemSort:updateCurrentZone()
     self.currentZoneName = zo_strformat(
         "<<1>>",
         GetZoneNameByIndex(GetCurrentMapZoneIndex())

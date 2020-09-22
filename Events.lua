@@ -26,7 +26,7 @@ function SurveyZone.Events.onLoadScreen(eventCode, initial)
     end
 
     SurveyZone.Collect:search()
-    SurveyZone.ItemSort:updateZone()
+    SurveyZone.ItemSort:updateCurrentZone()
     SurveyZone.GUI:refreshAll()
 end
 
