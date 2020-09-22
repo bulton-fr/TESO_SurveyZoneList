@@ -127,7 +127,7 @@ end
 function SurveyZoneList.Settings:buildSort(pos)
     return {
         type          = "dropdown",
-        name          = zo_strformat("sort #<<1>>", pos),
+        name          = zo_strformat("#<<1>>", pos),
         choices       = {
             GetString(SI_SURVEYZONELIST_SETTINGS_SORT_ZONE_NAME),
             GetString(SI_SURVEYZONELIST_SETTINGS_SORT_NB_UNIQUE),
