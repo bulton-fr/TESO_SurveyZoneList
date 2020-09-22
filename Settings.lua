@@ -95,7 +95,11 @@ function SurveyZone.Settings:buildSort(pos)
             GetString(SI_SURVEYZONE_SETTINGS_SORT_NB_UNIQUE),
             GetString(SI_SURVEYZONE_SETTINGS_SORT_NB_SURVEY),
         },
-        choicesValues = {"zoneName", "nbUnique", "nbSurvey"},
+        choicesValues = {
+            SurveyZone.ItemSort.ORDER_TYPE_ZONE_NAME,
+            SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE,
+            SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY
+        },
         getFunc       = function()
             return SurveyZone.ItemSort:obtainOrder()[pos]
         end,

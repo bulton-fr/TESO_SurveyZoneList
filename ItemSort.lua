@@ -3,6 +3,15 @@ SurveyZone.ItemSort = {}
 SurveyZone.ItemSort.savedVars = nil
 SurveyZone.ItemSort.currentZoneName = ""
 
+-- @const ORDER_TYPE_NB_UNIQUE The value for an order by number of unique survey point
+SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE = "nbUnique"
+
+-- @const ORDER_TYPE_NB_SURVEY The value for an order by the total number of survey in a zone
+SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY = "nbSurvey"
+
+-- @const ORDER_TYPE_ZONE_NAME The value for an order by zone name
+SurveyZone.ItemSort.ORDER_TYPE_ZONE_NAME = "zoneName"
+
 function SurveyZone.ItemSort:init()
     self.savedVars = SurveyZone.savedVariables.sort
 
@@ -12,9 +21,9 @@ end
 function SurveyZone.ItemSort:initSavedVarsValues()
     if self.savedVars.order == nil then
         self.savedVars.order = {
-            "nbUnique",
-            "nbSurvey",
-            "zoneName"
+            self.ORDER_TYPE_NB_UNIQUE,
+            self.ORDER_TYPE_NB_SURVEY,
+            self.ORDER_TYPE_ZONE_NAME
         }
     end
 
@@ -100,22 +109,22 @@ function SurveyZone.ItemSort.sortZoneList(left, right)
 
     local orderType = sortOrder[1]
 
-    if orderType == "nbUnique" and left.nbUnique == right.nbUnique then
+    if orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE and left.nbUnique == right.nbUnique then
         orderType = sortOrder[2]
-    elseif orderType == "nbSurvey" and left.nbSurvey == right.nbSurvey then
+    elseif orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY and left.nbSurvey == right.nbSurvey then
         orderType = sortOrder[2]
     end
-    if orderType == "nbUnique" and left.nbUnique == right.nbUnique then
+    if orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE and left.nbUnique == right.nbUnique then
         orderType = sortOrder[3]
-    elseif orderType == "nbSurvey" and left.nbSurvey == right.nbSurvey then
+    elseif orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY and left.nbSurvey == right.nbSurvey then
         orderType = sortOrder[3]
     end
     
-    if orderType == "zoneName" then
+    if orderType == SurveyZone.ItemSort.ORDER_TYPE_ZONE_NAME then
         return left.name < right.name
-    elseif orderType == "nbUnique" then
+    elseif orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE then
         return left.nbUnique > right.nbUnique
-    elseif orderType == "nbSurvey" then
+    elseif orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY then
         return left.nbSurvey > right.nbSurvey
     end
 end
