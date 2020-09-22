@@ -1,9 +1,20 @@
 SurveyZone.Collect = {}
 
+-- @var table Keys are the zone name (from survey item name), value is a table
+-- which contain all info about the zone like number of survey, etc
 SurveyZone.Collect.zoneList = {}
+
+-- @var table Keys are the slot index, value a table with info about the survey
+-- at the specific slot index; the table contain the zone name and the itemlink
 SurveyZone.Collect.slotList = {}
+
+-- @var table Same as zoneList but with numerical keys (like an array), so we
+-- don't care about keys on this table. Values are reference to values in zoneList.
 SurveyZone.Collect.orderedList = {}
 
+--[[
+-- Read all items in the character bag to find all surveys
+--]]
 function SurveyZone.Collect:search()
     self.zoneList    = {}
     self.slotList    = {}
@@ -18,6 +29,14 @@ function SurveyZone.Collect:search()
     end
 end
 
+--[[
+-- Read a specific item in the character bag to know if it's a survey, and
+-- parse the item name to know the zone name of the survey
+--
+-- @param int slotIdx The slot index of the item to read
+--
+-- @return string|nil The zone name of the survey, or nil
+--]]
 function SurveyZone.Collect:readItem(slotIdx)
     local itemLink      = GetItemLink(BAG_BACKPACK, slotIdx)
     local type, subType = GetItemLinkItemType(itemLink)
@@ -46,6 +65,13 @@ function SurveyZone.Collect:readItem(slotIdx)
     return itemZoneName
 end
 
+--[[
+-- Obtain the table skeleton used to save data about a zone
+--
+-- @param string itemZoneName A zone name
+--
+-- @return table
+--]]
 function obtainNewZoneInfo(itemZoneName)
     return {
         name        = itemZoneName,
@@ -56,6 +82,12 @@ function obtainNewZoneInfo(itemZoneName)
     }
 end
 
+--[[
+-- Update all lists for the item at slot slotIdx in the character bag
+--
+-- @param string itemZoneName The zone name where the survey is
+-- @param int slotIdx The item slot index in the character bag
+--]]
 function SurveyZone.Collect:updateItemToList(itemZoneName, slotIdx)
     if itemZoneName == nil then
         return
@@ -86,6 +118,12 @@ function SurveyZone.Collect:updateItemToList(itemZoneName, slotIdx)
     }
 end
 
+--[[
+-- Remove an item from all list
+--
+-- @param table itemInfo All info about the item; it's a value in table slotList
+-- @param int slotIdx The slot index where the item was
+--]]
 function SurveyZone.Collect:removeItemFromList(itemInfo, slotIdx)
     if itemInfo == nil then
         return
@@ -118,6 +156,11 @@ function SurveyZone.Collect:removeItemFromList(itemInfo, slotIdx)
     self.slotList[slotIdx] = nil
 end
 
+--[[
+-- Return saved info about the item at a specific slot index in character bag
+--
+-- @return table|nil
+--]]
 function SurveyZone.Collect:findForSlotIdx(slotIdx)
     return self.slotList[slotIdx]
 end

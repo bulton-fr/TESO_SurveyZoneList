@@ -7,7 +7,7 @@ SurveyZone.LAM            = LibAddonMenu2
 
 --[[
 -- Module initialiser
--- Intiialise savedVariables and GUI
+-- Intiialise savedVariables, GUI and sort system
 --]]
 function SurveyZone:Initialise()
     SurveyZone.savedVariables = ZO_SavedVars:NewAccountWide("SurveyZoneSavedVariables", 1, nil, {})

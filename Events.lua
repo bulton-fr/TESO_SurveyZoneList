@@ -14,8 +14,8 @@ function SurveyZone.Events.onLoaded(eventCode, addOnName)
 end
 
 --[[
--- Called when the user's interface loads and their character is activated after logging in or performing a reload of the UI.
--- This happens after <EVENT_ADD_ON_LOADED>, so the UI and all addons should be initialised already.
+-- Called after each load screen.
+-- When it's the character's first load after login (initial = true), it's always called after <EVENT_ADD_ON_LOADED>
 --
 -- @param integer eventCode
 -- @param boolean initial : true if the user just logged on, false with a UI reload (for example)
@@ -30,6 +30,19 @@ function SurveyZone.Events.onLoadScreen(eventCode, initial)
     SurveyZone.GUI:refreshAll()
 end
 
+--[[
+-- Called when a item move in the character bag (filter on event)
+--
+-- @link https://wiki.esoui.com/EVENT_INVENTORY_SINGLE_SLOT_UPDATE
+--
+-- @param integer eventCode
+-- @param integer bagId The bag id (always character bag because filter on event)
+-- @param integer slotIdx The item slot index
+-- @param bool bNewItem
+-- @param integer itemSoundCategory
+-- @param integer inventoryUpdateReason
+-- @param integer qt
+--]]
 function SurveyZone.Events.onMoveItem(eventCode, bagId, slotIdx, bNewItem, itemSoundCategory, inventoryUpdateReason, qt)
     local itemLink = GetItemLink(bagId, slotIdx)
     local itemZoneName = ""
@@ -51,10 +64,16 @@ function SurveyZone.Events.onMoveItem(eventCode, bagId, slotIdx, bNewItem, itemS
     end
 end
 
+--[[
+-- Called when the user stop to move the GUI
+--]]
 function SurveyZone.Events.onGuiMoveStop()
     SurveyZone.GUI:savePosition()
 end
 
+--[[
+-- Called when the user trigger the keybinds for "toggle GUI"
+--]]
 function SurveyZone.Events.keybindingsToggle()
     SurveyZone.GUI:toggle()
 end

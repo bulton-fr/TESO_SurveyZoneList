@@ -1,10 +1,34 @@
 SurveyZone.GUI = {}
 
+--[[
+-- @var table The ui TolLevelWindow
+--]]
 SurveyZone.GUI.ui        = nil
+
+--[[
+-- @var table The ui backdrop
+--]]
 SurveyZone.GUI.backUI    = nil
+
+--[[
+-- @var table The first item of the list which display list title
+--]]
 SurveyZone.GUI.title     = nil
+
+--[[
+-- @var table The fragment used to link the ui to a scene
+--]]
 SurveyZone.GUI.fragment  = nil
+
+--[[
+-- @var table A list of all GUIItems created. We cannot remove an ui item from
+-- memory, so we keep it all created items here to reuse it when the list is refreshed.
+--]]
 SurveyZone.GUI.itemList  = {}
+
+--[[
+-- @var table All saved variables dedicated to the gui.
+--]]
 SurveyZone.GUI.savedVars = nil
 
 --[[
@@ -18,6 +42,9 @@ function SurveyZone.GUI:init()
     self:defineFragment()
 end
 
+--[[
+-- Initialise with a default value all saved variables dedicated to the gui
+--]]
 function SurveyZone.GUI:initSavedVarsValues()
     if self.savedVars.position == nil then
         self.savedVars.position = {}
@@ -46,6 +73,9 @@ function SurveyZone.GUI:initSavedVarsValues()
     end
 end
 
+--[[
+-- Build the GUI
+--]]
 function SurveyZone.GUI:build()
     local WindowManager = GetWindowManager()
 
@@ -81,7 +111,7 @@ function SurveyZone.GUI:build()
 end
 
 --[[
--- Restore the GUI's position from savedVariables
+-- Restore the GUI's position from saved variables
 --]]
 function SurveyZone.GUI:restorePosition()
     self.ui:ClearAnchors()
@@ -92,10 +122,20 @@ function SurveyZone.GUI:restorePosition()
     self.ui:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, left, top)
 end
 
+--[[
+-- Return info about if the GUI position is locked or not
+--
+-- @return bool
+--]]
 function SurveyZone.GUI:isLocked()
     return self.savedVars.locked
 end
 
+--[[
+-- Define if the GUI is locked or not.
+--
+-- @param bool value
+--]]
 function SurveyZone.GUI:defineLocked(value)
     self.savedVars.locked = value
 
@@ -103,10 +143,20 @@ function SurveyZone.GUI:defineLocked(value)
 	self.ui:SetMovable(not value)
 end
 
+--[[
+-- Return info about if the GUI should be displayed when the world map is open or not
+--
+-- @return bool
+--]]
 function SurveyZone.GUI:isDisplayWithWMap()
     return self.savedVars.displayWithWMap
 end
 
+--[[
+-- Define if the GUI should be displayed when the world map is open or not
+--
+-- @param bool value
+--]]
 function SurveyZone.GUI:defineDisplayWithWMap(value)
     self.savedVars.displayWithWMap = value
 
@@ -117,10 +167,20 @@ function SurveyZone.GUI:defineDisplayWithWMap(value)
     end
 end
 
+--[[
+-- Return the text format used for each item
+--
+-- @return string
+--]]
 function SurveyZone.GUI:obtainDisplayItemText()
     return self.savedVars.displayItemText
 end
 
+--[[
+-- Define a new text format for items
+--
+-- @param string value
+--]]
 function SurveyZone.GUI:defineDisplayItemText(value)
     self.savedVars.displayItemText = value
     self:refreshAll()
@@ -135,7 +195,7 @@ function SurveyZone.GUI:savePosition()
 end
 
 --[[
--- Define GUI has a fragment linked to scenes.
+-- Define GUI as a fragment linked to scenes.
 -- With that, the GUI is hidden when we open a menu (like inventory or map)
 --]]
 function SurveyZone.GUI:defineFragment()
@@ -145,6 +205,11 @@ function SurveyZone.GUI:defineFragment()
     SCENE_MANAGER:GetScene("hudui"):AddFragment(self.fragment)
 end
 
+--[[
+-- Show or hide the GUI
+-- If the GUI is currently hidden, it will be shown.
+-- If the GUI is currently shown, it will be hidden.
+--]]
 function SurveyZone.GUI:toggle()
     self.savedVars.hidden = not self.savedVars.hidden
     self.ui:SetHidden(self.savedVars.hidden)
@@ -158,6 +223,9 @@ function SurveyZone.GUI:toggle()
     end
 end
 
+--[[
+-- Refresh all items displayed
+--]]
 function SurveyZone.GUI:refreshAll()
     self:resetAllItems()
 
@@ -190,6 +258,9 @@ function SurveyZone.GUI:refreshAll()
     self.backUI:SetDimensions(self.ui:GetWidth(), self.ui:GetHeight())
 end
 
+--[[
+-- Reset each item values an hide it
+--]]
 function SurveyZone.GUI:resetAllItems()
     for idx, guiItem in pairs(self.itemList) do
         if guiItem ~= nil then
@@ -201,6 +272,9 @@ function SurveyZone.GUI:resetAllItems()
     end
 end
 
+--[[
+-- Hide all items
+--]]
 function SurveyZone.GUI:hideAllItems()
     for idx, guiItem in pairs(self.itemList) do
         if guiItem ~= nil then
@@ -211,6 +285,9 @@ function SurveyZone.GUI:hideAllItems()
     end
 end
 
+--[[
+-- Show all used items
+--]]
 function SurveyZone.GUI:showAllItems()
     for idx, guiItem in pairs(self.itemList) do
         if guiItem ~= nil then

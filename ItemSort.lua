@@ -1,6 +1,9 @@
 SurveyZone.ItemSort = {}
 
+-- @var table All saved variables dedicated to the sort system.
 SurveyZone.ItemSort.savedVars = nil
+
+-- @var string The current zone name
 SurveyZone.ItemSort.currentZoneName = ""
 
 -- @const ORDER_TYPE_NB_UNIQUE The value for an order by number of unique survey point
@@ -12,12 +15,18 @@ SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY = "nbSurvey"
 -- @const ORDER_TYPE_ZONE_NAME The value for an order by zone name
 SurveyZone.ItemSort.ORDER_TYPE_ZONE_NAME = "zoneName"
 
+--[[
+-- Initialise data used by the sort system
+--]]
 function SurveyZone.ItemSort:init()
     self.savedVars = SurveyZone.savedVariables.sort
 
     self:initSavedVarsValues()
 end
 
+--[[
+-- Initialise with a default value all saved variables dedicated to the sort system
+--]]
 function SurveyZone.ItemSort:initSavedVarsValues()
     if self.savedVars.order == nil then
         self.savedVars.order = {
@@ -32,24 +41,48 @@ function SurveyZone.ItemSort:initSavedVarsValues()
     end
 end
 
+--[[
+-- Obtain the current order to use
+--
+-- @return table
+--]]
 function SurveyZone.ItemSort:obtainOrder()
     return self.savedVars.order
 end
 
+--[[
+-- Define a new order to use
+--
+-- @param integer pos The order priority index (1 to 3)
+-- @param string value The order type to use
+--]]
 function SurveyZone.ItemSort:defineOrder(pos, value)
     self.savedVars.order[pos] = value
     SurveyZone.GUI:refreshAll()
 end
 
+--[[
+-- Obtain info about if the current zone must always be the first item or not
+--
+-- @return bool
+--]]
 function SurveyZone.ItemSort:isKeepCurrentZoneFirst()
     return self.savedVars.keepCurrentZoneFirst
 end
 
+--[[
+-- Define if the current zone must always be the first item or not
+--
+-- @param bool value
+--]]
 function SurveyZone.ItemSort:defineKeepCurrentZoneFirst(value)
     self.savedVars.keepCurrentZoneFirst = value
     SurveyZone.GUI:refreshAll()
 end
 
+--[[
+-- Update the current zone name
+--]]
 function SurveyZone.ItemSort:updateCurrentZone()
     self.currentZoneName = zo_strformat(
         "<<1>>",
@@ -59,6 +92,8 @@ function SurveyZone.ItemSort:updateCurrentZone()
     if self.currentZoneName == nil then
         self.currentZoneName = ""
     else
+        -- The current zone name is not espaced by espaceLuaStr because it's
+        -- the string in which we search a zone name, it's not used as pattern.
         self.currentZoneName = self.currentZoneName:lower()
     end
 end
@@ -90,13 +125,26 @@ function SurveyZone.ItemSort:espaceLuaStr(str)
     return str:gsub(".", matches)
 end
 
+--[[
+-- Execute the table's sort on SurveyZone.Collect.orderedList
+--]]
 function SurveyZone.ItemSort:exec()
     table.sort(SurveyZone.Collect.orderedList, self.sortZoneList)
 end
 
+--[[
+-- Callback function used by table.sort.
+-- It's called each time an item in the sorted table is compared to another.
+--
+-- @param table left The left item to compare
+-- @param table right The right item to compare
+--
+-- @return bool true if left item as the priority on right item, else return false
+--]]
 function SurveyZone.ItemSort.sortZoneList(left, right)
     local sortOrder = SurveyZone.ItemSort.savedVars.order
 
+    -- Current zone always first item
     if SurveyZone.ItemSort:isKeepCurrentZoneFirst() == true then
         local currentName = SurveyZone.ItemSort.currentZoneName
 
@@ -107,7 +155,11 @@ function SurveyZone.ItemSort.sortZoneList(left, right)
         end
     end
 
+    -- Sort type to use
     local orderType = sortOrder[1]
+
+    -- We never compare to identical zone name, so not need a elseif for it.
+    -- It's because there is not duplicate of zone name in the sorted table.
 
     if orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE and left.nbUnique == right.nbUnique then
         orderType = sortOrder[2]
@@ -120,6 +172,7 @@ function SurveyZone.ItemSort.sortZoneList(left, right)
         orderType = sortOrder[3]
     end
     
+    -- Do the comparison
     if orderType == SurveyZone.ItemSort.ORDER_TYPE_ZONE_NAME then
         return left.name < right.name
     elseif orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE then

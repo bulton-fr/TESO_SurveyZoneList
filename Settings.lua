@@ -1,7 +1,11 @@
 SurveyZone.Settings = {}
 
+-- @var string The name of the setting panel
 SurveyZone.Settings.panelName = "SurveyZoneSettingsPanel"
 
+--[[
+-- Initialise the Setting interface
+--]]
 function SurveyZone.Settings:init()
     local panelData = {
         type   = "panel",
@@ -13,6 +17,9 @@ function SurveyZone.Settings:init()
     self:build()
 end
 
+--[[
+-- Build the settings interface
+--]]
 function SurveyZone.Settings:build()
     local optionsData = {
         self:buildGUILocked(),
@@ -31,6 +38,11 @@ function SurveyZone.Settings:build()
     SurveyZone.LAM:RegisterOptionControls(self.panelName, optionsData)
 end
 
+--[[
+-- Return info to build the setting panel for "lock ui"
+--
+-- @return table
+--]]
 function SurveyZone.Settings:buildGUILocked()
     return {
         type    = "checkbox",
@@ -44,6 +56,11 @@ function SurveyZone.Settings:buildGUILocked()
     }
 end
 
+--[[
+-- Return info to build the setting panel for "display with world map"
+--
+-- @return table
+--]]
 function SurveyZone.Settings:buildDisplayedWithWorldMap()
     return {
         type    = "checkbox",
@@ -57,6 +74,11 @@ function SurveyZone.Settings:buildDisplayedWithWorldMap()
     }
 end
 
+--[[
+-- Return info to build the setting panel for "keep the current zone first"
+--
+-- @return table
+--]]
 function SurveyZone.Settings:buildCurrentZoneFirst()
     return {
         type    = "checkbox",
@@ -70,6 +92,11 @@ function SurveyZone.Settings:buildCurrentZoneFirst()
     }
 end
 
+--[[
+-- Return info to build the setting panel for "item text format"
+--
+-- @return table
+--]]
 function SurveyZone.Settings:buildDisplayItemText()
     return {
         type        = "editbox",
@@ -86,6 +113,13 @@ function SurveyZone.Settings:buildDisplayItemText()
     }
 end
 
+--[[
+-- Return info to build the setting panel for a "sort" order
+--
+-- @param integer pos The sort order
+--
+-- @return table
+--]]
 function SurveyZone.Settings:buildSort(pos)
     return {
         type          = "dropdown",
