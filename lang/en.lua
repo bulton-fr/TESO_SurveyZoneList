@@ -21,6 +21,8 @@ ZO_CreateStringId(
     .."<<3>> Total number of survey in the zone\n\n"
     .."Default value is <<1>> : <<2>> - <<3>>"
 )
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_TITLE", "Sort")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_DESC", "You can define the order priority used to sort the zone list.")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_ZONE_NAME", "zone name")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_NB_UNIQUE", "number of unique survey")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_NB_SURVEY", "total number of survey")

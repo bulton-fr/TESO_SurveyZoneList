@@ -28,7 +28,11 @@ function SurveyZoneList.Settings:build()
         self:buildDisplayItemText(),
         {
             type = "header",
-            name = "Sort"
+            name = GetString(SI_SURVEYZONELIST_SETTINGS_SORT_TITLE)
+        },
+        {
+            type = "description",
+            text = GetString(SI_SURVEYZONELIST_SETTINGS_SORT_DESC)
         },
         self:buildSort(1),
         self:buildSort(2),
