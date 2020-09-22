@@ -1,23 +1,23 @@
-SurveyZone.GUIItem = {}
-SurveyZone.GUIItem.__index = SurveyZone.GUIItem
+SurveyZoneList.GUIItem = {}
+SurveyZoneList.GUIItem.__index = SurveyZoneList.GUIItem
 
 -- @var static integer uiIdx The current uiItem index which represents
 -- the number of item already created
-SurveyZone.GUIItem.uiIdx = 0
+SurveyZoneList.GUIItem.uiIdx = 0
 
 --[[
 -- Instanciate a new GUIItem "object"
 --
 -- @return GUIItem
 --]]
-function SurveyZone.GUIItem:new()
+function SurveyZoneList.GUIItem:new()
     local guiItem = {
         ui       = nil, -- (table) The item's ui BACKDROP
         uiLabel  = nil, -- (table) The item's ui label
-        parentUI = SurveyZone.GUI.ui, -- (table) The TopLevelWindow in GUI table
+        parentUI = SurveyZoneList.GUI.ui, -- (table) The TopLevelWindow in GUI table
         used     = false, -- (bool) If the current item is used or not (cannot be destroyed)
         zoneName = nil, -- (string) The zone name to display
-        zoneInfo = nil -- (table) Info about the zone, value in SurveyZone.Collect.orderedList 
+        zoneInfo = nil -- (table) Info about the zone, value in SurveyZoneList.Collect.orderedList 
     }
 
     setmetatable(guiItem, self)
@@ -30,9 +30,9 @@ end
 --[[
 -- Create ui elements used by the item
 --]]
-function SurveyZone.GUIItem:initUI()
+function SurveyZoneList.GUIItem:initUI()
     local WindowManager = GetWindowManager()
-    local uiName        = "SurveyZoneUIItem"..self.uiIdx
+    local uiName        = "SurveyZoneListUIItem"..self.uiIdx
     local uiLabelName   = uiName.."_Label"
 
     self.ui = WindowManager:CreateControl(uiName, self.parentUI, CT_BACKDROP)
@@ -51,7 +51,7 @@ end
 --
 -- @param bool isHidden To hide (if true) the item's ui or not (if false)
 --]]
-function SurveyZone.GUIItem:display(isHidden)
+function SurveyZoneList.GUIItem:display(isHidden)
     if isHidden == true then
         self:hide()
     else
@@ -62,14 +62,14 @@ end
 --[[
 -- To hide the item's ui
 --]]
-function SurveyZone.GUIItem:hide()
+function SurveyZoneList.GUIItem:hide()
     self.ui:SetHidden(true)
 end
 
 --[[
 -- To show the item's ui
 --]]
-function SurveyZone.GUIItem:show()
+function SurveyZoneList.GUIItem:show()
     self.ui:SetHidden(false)
 end
 
@@ -78,16 +78,16 @@ end
 --
 -- @param integer index The index (position in the list) defined for the item
 --]]
-function SurveyZone.GUIItem:definePosition(index)
+function SurveyZoneList.GUIItem:definePosition(index)
     self.ui:SetAnchor(TOPLEFT, self.parentUI, TOPLEFT, 0, index*30)
 end
 
 --[[
 -- Update the text to display
 --]]
-function SurveyZone.GUIItem:updateText()
+function SurveyZoneList.GUIItem:updateText()
     self.uiLabel:SetText(zo_strformat(
-        SurveyZone.GUI:obtainDisplayItemText(),
+        SurveyZoneList.GUI:obtainDisplayItemText(),
         self.zoneName,
         self.zoneInfo.nbUnique,
         self.zoneInfo.nbSurvey

@@ -1,26 +1,27 @@
-SurveyZone = {}
+SurveyZoneList = {}
 
-SurveyZone.name           = "SurveyZone"
-SurveyZone.savedVariables = nil
-SurveyZone.ready          = false
-SurveyZone.LAM            = LibAddonMenu2
+SurveyZoneList.name           = "Survey Zone List"
+SurveyZoneList.dirName        = "SurveyZoneList"
+SurveyZoneList.savedVariables = nil
+SurveyZoneList.ready          = false
+SurveyZoneList.LAM            = LibAddonMenu2
 
 --[[
 -- Module initialiser
 -- Intiialise savedVariables, GUI and sort system
 --]]
-function SurveyZone:Initialise()
-    SurveyZone.savedVariables = ZO_SavedVars:NewAccountWide("SurveyZoneSavedVariables", 1, nil, {})
+function SurveyZoneList:Initialise()
+    SurveyZoneList.savedVariables = ZO_SavedVars:NewAccountWide("SurveyZoneListSavedVariables", 1, nil, {})
 
-    if SurveyZone.savedVariables.gui == nil then
-        SurveyZone.savedVariables.gui = {}
+    if SurveyZoneList.savedVariables.gui == nil then
+        SurveyZoneList.savedVariables.gui = {}
     end
-    if SurveyZone.savedVariables.sort == nil then
-        SurveyZone.savedVariables.sort = {}
+    if SurveyZoneList.savedVariables.sort == nil then
+        SurveyZoneList.savedVariables.sort = {}
     end
 
-    SurveyZone.Settings:init()
-    SurveyZone.GUI:init()
-    SurveyZone.ItemSort:init()
-    SurveyZone.ready = true
+    SurveyZoneList.Settings:init()
+    SurveyZoneList.GUI:init()
+    SurveyZoneList.ItemSort:init()
+    SurveyZoneList.ready = true
 end

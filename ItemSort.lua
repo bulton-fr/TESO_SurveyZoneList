@@ -1,25 +1,25 @@
-SurveyZone.ItemSort = {}
+SurveyZoneList.ItemSort = {}
 
 -- @var table All saved variables dedicated to the sort system.
-SurveyZone.ItemSort.savedVars = nil
+SurveyZoneList.ItemSort.savedVars = nil
 
 -- @var string The current zone name
-SurveyZone.ItemSort.currentZoneName = ""
+SurveyZoneList.ItemSort.currentZoneName = ""
 
 -- @const ORDER_TYPE_NB_UNIQUE The value for an order by number of unique survey point
-SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE = "nbUnique"
+SurveyZoneList.ItemSort.ORDER_TYPE_NB_UNIQUE = "nbUnique"
 
 -- @const ORDER_TYPE_NB_SURVEY The value for an order by the total number of survey in a zone
-SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY = "nbSurvey"
+SurveyZoneList.ItemSort.ORDER_TYPE_NB_SURVEY = "nbSurvey"
 
 -- @const ORDER_TYPE_ZONE_NAME The value for an order by zone name
-SurveyZone.ItemSort.ORDER_TYPE_ZONE_NAME = "zoneName"
+SurveyZoneList.ItemSort.ORDER_TYPE_ZONE_NAME = "zoneName"
 
 --[[
 -- Initialise data used by the sort system
 --]]
-function SurveyZone.ItemSort:init()
-    self.savedVars = SurveyZone.savedVariables.sort
+function SurveyZoneList.ItemSort:init()
+    self.savedVars = SurveyZoneList.savedVariables.sort
 
     self:initSavedVarsValues()
 end
@@ -27,7 +27,7 @@ end
 --[[
 -- Initialise with a default value all saved variables dedicated to the sort system
 --]]
-function SurveyZone.ItemSort:initSavedVarsValues()
+function SurveyZoneList.ItemSort:initSavedVarsValues()
     if self.savedVars.order == nil then
         self.savedVars.order = {
             self.ORDER_TYPE_NB_UNIQUE,
@@ -46,7 +46,7 @@ end
 --
 -- @return table
 --]]
-function SurveyZone.ItemSort:obtainOrder()
+function SurveyZoneList.ItemSort:obtainOrder()
     return self.savedVars.order
 end
 
@@ -56,9 +56,9 @@ end
 -- @param integer pos The order priority index (1 to 3)
 -- @param string value The order type to use
 --]]
-function SurveyZone.ItemSort:defineOrder(pos, value)
+function SurveyZoneList.ItemSort:defineOrder(pos, value)
     self.savedVars.order[pos] = value
-    SurveyZone.GUI:refreshAll()
+    SurveyZoneList.GUI:refreshAll()
 end
 
 --[[
@@ -66,7 +66,7 @@ end
 --
 -- @return bool
 --]]
-function SurveyZone.ItemSort:isKeepCurrentZoneFirst()
+function SurveyZoneList.ItemSort:isKeepCurrentZoneFirst()
     return self.savedVars.keepCurrentZoneFirst
 end
 
@@ -75,15 +75,15 @@ end
 --
 -- @param bool value
 --]]
-function SurveyZone.ItemSort:defineKeepCurrentZoneFirst(value)
+function SurveyZoneList.ItemSort:defineKeepCurrentZoneFirst(value)
     self.savedVars.keepCurrentZoneFirst = value
-    SurveyZone.GUI:refreshAll()
+    SurveyZoneList.GUI:refreshAll()
 end
 
 --[[
 -- Update the current zone name
 --]]
-function SurveyZone.ItemSort:updateCurrentZone()
+function SurveyZoneList.ItemSort:updateCurrentZone()
     self.currentZoneName = zo_strformat(
         "<<1>>",
         GetZoneNameByIndex(GetCurrentMapZoneIndex())
@@ -106,7 +106,7 @@ end
 --
 -- @return String
 --]]
-function SurveyZone.ItemSort:espaceLuaStr(str)
+function SurveyZoneList.ItemSort:espaceLuaStr(str)
     local matches = {
         ["^"] = "%^";
         ["$"] = "%$";
@@ -126,10 +126,10 @@ function SurveyZone.ItemSort:espaceLuaStr(str)
 end
 
 --[[
--- Execute the table's sort on SurveyZone.Collect.orderedList
+-- Execute the table's sort on SurveyZoneList.Collect.orderedList
 --]]
-function SurveyZone.ItemSort:exec()
-    table.sort(SurveyZone.Collect.orderedList, self.sortZoneList)
+function SurveyZoneList.ItemSort:exec()
+    table.sort(SurveyZoneList.Collect.orderedList, self.sortZoneList)
 end
 
 --[[
@@ -141,12 +141,12 @@ end
 --
 -- @return bool true if left item as the priority on right item, else return false
 --]]
-function SurveyZone.ItemSort.sortZoneList(left, right)
-    local sortOrder = SurveyZone.ItemSort.savedVars.order
+function SurveyZoneList.ItemSort.sortZoneList(left, right)
+    local sortOrder = SurveyZoneList.ItemSort.savedVars.order
 
     -- Current zone always first item
-    if SurveyZone.ItemSort:isKeepCurrentZoneFirst() == true then
-        local currentName = SurveyZone.ItemSort.currentZoneName
+    if SurveyZoneList.ItemSort:isKeepCurrentZoneFirst() == true then
+        local currentName = SurveyZoneList.ItemSort.currentZoneName
 
         if string.find(currentName, left.nameEscaped) then
             return true
@@ -161,23 +161,23 @@ function SurveyZone.ItemSort.sortZoneList(left, right)
     -- We never compare to identical zone name, so not need a elseif for it.
     -- It's because there is not duplicate of zone name in the sorted table.
 
-    if orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE and left.nbUnique == right.nbUnique then
+    if orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_UNIQUE and left.nbUnique == right.nbUnique then
         orderType = sortOrder[2]
-    elseif orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY and left.nbSurvey == right.nbSurvey then
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_SURVEY and left.nbSurvey == right.nbSurvey then
         orderType = sortOrder[2]
     end
-    if orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE and left.nbUnique == right.nbUnique then
+    if orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_UNIQUE and left.nbUnique == right.nbUnique then
         orderType = sortOrder[3]
-    elseif orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY and left.nbSurvey == right.nbSurvey then
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_SURVEY and left.nbSurvey == right.nbSurvey then
         orderType = sortOrder[3]
     end
     
     -- Do the comparison
-    if orderType == SurveyZone.ItemSort.ORDER_TYPE_ZONE_NAME then
+    if orderType == SurveyZoneList.ItemSort.ORDER_TYPE_ZONE_NAME then
         return left.name < right.name
-    elseif orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE then
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_UNIQUE then
         return left.nbUnique > right.nbUnique
-    elseif orderType == SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY then
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_SURVEY then
         return left.nbSurvey > right.nbSurvey
     end
 end

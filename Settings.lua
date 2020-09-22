@@ -1,26 +1,26 @@
-SurveyZone.Settings = {}
+SurveyZoneList.Settings = {}
 
 -- @var string The name of the setting panel
-SurveyZone.Settings.panelName = "SurveyZoneSettingsPanel"
+SurveyZoneList.Settings.panelName = "SurveyZoneListSettingsPanel"
 
 --[[
 -- Initialise the Setting interface
 --]]
-function SurveyZone.Settings:init()
+function SurveyZoneList.Settings:init()
     local panelData = {
         type   = "panel",
-        name   = "Survey Zone",
+        name   = SurveyZoneList.name,
         author = "bulton-fr",
     }
 
-    SurveyZone.LAM:RegisterAddonPanel(self.panelName, panelData)
+    SurveyZoneList.LAM:RegisterAddonPanel(self.panelName, panelData)
     self:build()
 end
 
 --[[
 -- Build the settings interface
 --]]
-function SurveyZone.Settings:build()
+function SurveyZoneList.Settings:build()
     local optionsData = {
         self:buildGUILocked(),
         self:buildDisplayedWithWorldMap(),
@@ -35,7 +35,7 @@ function SurveyZone.Settings:build()
         self:buildSort(3)
     }
 
-    SurveyZone.LAM:RegisterOptionControls(self.panelName, optionsData)
+    SurveyZoneList.LAM:RegisterOptionControls(self.panelName, optionsData)
 end
 
 --[[
@@ -43,15 +43,15 @@ end
 --
 -- @return table
 --]]
-function SurveyZone.Settings:buildGUILocked()
+function SurveyZoneList.Settings:buildGUILocked()
     return {
         type    = "checkbox",
-        name    = GetString(SI_SURVEYZONE_SETTINGS_LOCKUI),
+        name    = GetString(SI_SURVEYZONELIST_SETTINGS_LOCKUI),
         getFunc = function()
-            return SurveyZone.GUI:isLocked()
+            return SurveyZoneList.GUI:isLocked()
         end,
         setFunc = function(value)
-            SurveyZone.GUI:defineLocked(value)
+            SurveyZoneList.GUI:defineLocked(value)
         end,
     }
 end
@@ -61,15 +61,15 @@ end
 --
 -- @return table
 --]]
-function SurveyZone.Settings:buildDisplayedWithWorldMap()
+function SurveyZoneList.Settings:buildDisplayedWithWorldMap()
     return {
         type    = "checkbox",
-        name    = GetString(SI_SURVEYZONE_SETTINGS_DISPLAYED_WITH_WM),
+        name    = GetString(SI_SURVEYZONELIST_SETTINGS_DISPLAYED_WITH_WM),
         getFunc = function()
-            return SurveyZone.GUI:isDisplayWithWMap()
+            return SurveyZoneList.GUI:isDisplayWithWMap()
         end,
         setFunc = function(value)
-            SurveyZone.GUI:defineDisplayWithWMap(value)
+            SurveyZoneList.GUI:defineDisplayWithWMap(value)
         end,
     }
 end
@@ -79,15 +79,15 @@ end
 --
 -- @return table
 --]]
-function SurveyZone.Settings:buildCurrentZoneFirst()
+function SurveyZoneList.Settings:buildCurrentZoneFirst()
     return {
         type    = "checkbox",
-        name    = GetString(SI_SURVEYZONE_SETTINGS_CURRENT_ZONE_FIRST),
+        name    = GetString(SI_SURVEYZONELIST_SETTINGS_CURRENT_ZONE_FIRST),
         getFunc = function()
-            return SurveyZone.ItemSort:isKeepCurrentZoneFirst()
+            return SurveyZoneList.ItemSort:isKeepCurrentZoneFirst()
         end,
         setFunc = function(value)
-            SurveyZone.ItemSort:defineKeepCurrentZoneFirst(value)
+            SurveyZoneList.ItemSort:defineKeepCurrentZoneFirst(value)
         end,
     }
 end
@@ -97,18 +97,18 @@ end
 --
 -- @return table
 --]]
-function SurveyZone.Settings:buildDisplayItemText()
+function SurveyZoneList.Settings:buildDisplayItemText()
     return {
         type        = "editbox",
-        name        = GetString(SI_SURVEYZONE_SETTINGS_ITEM_TEXT_FORMAT),
+        name        = GetString(SI_SURVEYZONELIST_SETTINGS_ITEM_TEXT_FORMAT),
         isMultiline = false,
         isExtraWide = false,
-        tooltip     = GetString(SI_SURVEYZONE_SETTINGS_ITEM_TEXT_FORMAT_DESC),
+        tooltip     = GetString(SI_SURVEYZONELIST_SETTINGS_ITEM_TEXT_FORMAT_DESC),
         getFunc     = function()
-            return SurveyZone.GUI:obtainDisplayItemText()
+            return SurveyZoneList.GUI:obtainDisplayItemText()
         end,
         setFunc     = function(value)
-            return SurveyZone.GUI:defineDisplayItemText(value)
+            return SurveyZoneList.GUI:defineDisplayItemText(value)
         end,
     }
 end
@@ -120,25 +120,25 @@ end
 --
 -- @return table
 --]]
-function SurveyZone.Settings:buildSort(pos)
+function SurveyZoneList.Settings:buildSort(pos)
     return {
         type          = "dropdown",
         name          = zo_strformat("sort #<<1>>", pos),
         choices       = {
-            GetString(SI_SURVEYZONE_SETTINGS_SORT_ZONE_NAME),
-            GetString(SI_SURVEYZONE_SETTINGS_SORT_NB_UNIQUE),
-            GetString(SI_SURVEYZONE_SETTINGS_SORT_NB_SURVEY),
+            GetString(SI_SURVEYZONELIST_SETTINGS_SORT_ZONE_NAME),
+            GetString(SI_SURVEYZONELIST_SETTINGS_SORT_NB_UNIQUE),
+            GetString(SI_SURVEYZONELIST_SETTINGS_SORT_NB_SURVEY),
         },
         choicesValues = {
-            SurveyZone.ItemSort.ORDER_TYPE_ZONE_NAME,
-            SurveyZone.ItemSort.ORDER_TYPE_NB_UNIQUE,
-            SurveyZone.ItemSort.ORDER_TYPE_NB_SURVEY
+            SurveyZoneList.ItemSort.ORDER_TYPE_ZONE_NAME,
+            SurveyZoneList.ItemSort.ORDER_TYPE_NB_UNIQUE,
+            SurveyZoneList.ItemSort.ORDER_TYPE_NB_SURVEY
         },
         getFunc       = function()
-            return SurveyZone.ItemSort:obtainOrder()[pos]
+            return SurveyZoneList.ItemSort:obtainOrder()[pos]
         end,
         setFunc       = function(sortOrder)
-            SurveyZone.ItemSort:defineOrder(pos, sortOrder)
+            SurveyZoneList.ItemSort:defineOrder(pos, sortOrder)
         end
     }
 end

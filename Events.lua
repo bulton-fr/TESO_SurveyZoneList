@@ -1,4 +1,4 @@
-SurveyZone.Events = {}
+SurveyZoneList.Events = {}
 
 --[[
 -- Called when the addon is loaded
@@ -6,10 +6,10 @@ SurveyZone.Events = {}
 -- @param number eventCode
 -- @param string addonName name of the loaded addon
 --]]
-function SurveyZone.Events.onLoaded(eventCode, addOnName)
+function SurveyZoneList.Events.onLoaded(eventCode, addOnName)
     -- The event fires each time *any* addon loads - but we only care about when our own addon loads.
-    if addOnName == SurveyZone.name then
-        SurveyZone:Initialise()
+    if addOnName == SurveyZoneList.dirName then
+        SurveyZoneList:Initialise()
     end
 end
 
@@ -20,14 +20,14 @@ end
 -- @param integer eventCode
 -- @param boolean initial : true if the user just logged on, false with a UI reload (for example)
 --]]
-function SurveyZone.Events.onLoadScreen(eventCode, initial)
-    if SurveyZone.ready == false then
+function SurveyZoneList.Events.onLoadScreen(eventCode, initial)
+    if SurveyZoneList.ready == false then
         return
     end
 
-    SurveyZone.Collect:search()
-    SurveyZone.ItemSort:updateCurrentZone()
-    SurveyZone.GUI:refreshAll()
+    SurveyZoneList.Collect:search()
+    SurveyZoneList.ItemSort:updateCurrentZone()
+    SurveyZoneList.GUI:refreshAll()
 end
 
 --[[
@@ -43,23 +43,23 @@ end
 -- @param integer inventoryUpdateReason
 -- @param integer qt
 --]]
-function SurveyZone.Events.onMoveItem(eventCode, bagId, slotIdx, bNewItem, itemSoundCategory, inventoryUpdateReason, qt)
+function SurveyZoneList.Events.onMoveItem(eventCode, bagId, slotIdx, bNewItem, itemSoundCategory, inventoryUpdateReason, qt)
     local itemLink = GetItemLink(bagId, slotIdx)
     local itemZoneName = ""
 
     if itemLink == "" then
-        itemInfo = SurveyZone.Collect:findForSlotIdx(slotIdx)
+        itemInfo = SurveyZoneList.Collect:findForSlotIdx(slotIdx)
 
         if itemInfo ~= nil then
-            SurveyZone.Collect:removeItemFromList(itemInfo, slotIdx)
-            SurveyZone.GUI:refreshAll()
+            SurveyZoneList.Collect:removeItemFromList(itemInfo, slotIdx)
+            SurveyZoneList.GUI:refreshAll()
         end
     else
-        itemZoneName = SurveyZone.Collect:readItem(slotIdx)
+        itemZoneName = SurveyZoneList.Collect:readItem(slotIdx)
 
         if itemZoneName ~= nil then
-            SurveyZone.Collect:updateItemToList(itemZoneName, slotIdx)
-            SurveyZone.GUI:refreshAll()
+            SurveyZoneList.Collect:updateItemToList(itemZoneName, slotIdx)
+            SurveyZoneList.GUI:refreshAll()
         end
     end
 end
@@ -67,13 +67,13 @@ end
 --[[
 -- Called when the user stop to move the GUI
 --]]
-function SurveyZone.Events.onGuiMoveStop()
-    SurveyZone.GUI:savePosition()
+function SurveyZoneList.Events.onGuiMoveStop()
+    SurveyZoneList.GUI:savePosition()
 end
 
 --[[
 -- Called when the user trigger the keybinds for "toggle GUI"
 --]]
-function SurveyZone.Events.keybindingsToggle()
-    SurveyZone.GUI:toggle()
+function SurveyZoneList.Events.keybindingsToggle()
+    SurveyZoneList.GUI:toggle()
 end

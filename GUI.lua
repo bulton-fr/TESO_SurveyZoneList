@@ -1,41 +1,41 @@
-SurveyZone.GUI = {}
+SurveyZoneList.GUI = {}
 
 --[[
 -- @var table The ui TolLevelWindow
 --]]
-SurveyZone.GUI.ui        = nil
+SurveyZoneList.GUI.ui        = nil
 
 --[[
 -- @var table The ui backdrop
 --]]
-SurveyZone.GUI.backUI    = nil
+SurveyZoneList.GUI.backUI    = nil
 
 --[[
 -- @var table The first item of the list which display list title
 --]]
-SurveyZone.GUI.title     = nil
+SurveyZoneList.GUI.title     = nil
 
 --[[
 -- @var table The fragment used to link the ui to a scene
 --]]
-SurveyZone.GUI.fragment  = nil
+SurveyZoneList.GUI.fragment  = nil
 
 --[[
 -- @var table A list of all GUIItems created. We cannot remove an ui item from
 -- memory, so we keep it all created items here to reuse it when the list is refreshed.
 --]]
-SurveyZone.GUI.itemList  = {}
+SurveyZoneList.GUI.itemList  = {}
 
 --[[
 -- @var table All saved variables dedicated to the gui.
 --]]
-SurveyZone.GUI.savedVars = nil
+SurveyZoneList.GUI.savedVars = nil
 
 --[[
 -- Initialise the GUI
 --]]
-function SurveyZone.GUI:init()
-    self.savedVars = SurveyZone.savedVariables.gui
+function SurveyZoneList.GUI:init()
+    self.savedVars = SurveyZoneList.savedVariables.gui
 
     self:initSavedVarsValues()
     self:build()
@@ -45,7 +45,7 @@ end
 --[[
 -- Initialise with a default value all saved variables dedicated to the gui
 --]]
-function SurveyZone.GUI:initSavedVarsValues()
+function SurveyZoneList.GUI:initSavedVarsValues()
     if self.savedVars.position == nil then
         self.savedVars.position = {}
     end
@@ -76,19 +76,19 @@ end
 --[[
 -- Build the GUI
 --]]
-function SurveyZone.GUI:build()
+function SurveyZoneList.GUI:build()
     local WindowManager = GetWindowManager()
 
-    self.ui = WindowManager:CreateTopLevelWindow("SurveyZoneUI")
+    self.ui = WindowManager:CreateTopLevelWindow("SurveyZoneListUI")
 	self.ui:SetClampedToScreen(true)
 	self.ui:ClearAnchors()
     self.ui:SetHidden(self.savedVars.hidden)
     self.ui:SetDimensions(300, 30)
-	self.ui:SetHandler("OnMoveStop", function(...) SurveyZone.Events.onGuiMoveStop() end)
+	self.ui:SetHandler("OnMoveStop", function(...) SurveyZoneList.Events.onGuiMoveStop() end)
     self:restorePosition()
     self:defineLocked(self.savedVars.locked)
 
-	self.backUI = WindowManager:CreateControl("SurveyZoneUIBack", self.ui, CT_BACKDROP)
+	self.backUI = WindowManager:CreateControl("SurveyZoneListUIBack", self.ui, CT_BACKDROP)
     self.backUI:SetAnchor(TOPLEFT, self.ui, TOPLEFT, 0, 0)
     self.backUI:SetDimensions(self.ui:GetWidth(), self.ui:GetHeight())
     self.backUI:SetHidden(self.savedVars.hidden)
@@ -96,7 +96,7 @@ function SurveyZone.GUI:build()
 	self.backUI:SetEdgeColor(0, 0, 0, .25)
 	self.backUI:SetEdgeTexture(nil, 1, 1, 0, 0)
 
-	self.title = WindowManager:CreateControl("SurveyZoneUITitle", self.ui, CT_BACKDROP)
+	self.title = WindowManager:CreateControl("SurveyZoneListUITitle", self.ui, CT_BACKDROP)
     self.title:SetAnchor(TOPLEFT, self.ui, TOPLEFT, 0, 0)
     self.title:SetDimensions(self.ui:GetWidth(), 30)
     self.title:SetHidden(self.savedVars.hidden)
@@ -106,14 +106,14 @@ function SurveyZone.GUI:build()
 
     local titleLabel = WindowManager:CreateControl("titleLabel", self.title, CT_LABEL)
     titleLabel:SetAnchor(TOPLEFT, self.title, TOPLEFT, 5, 3)
-    titleLabel:SetText(GetString(SI_SURVEYZONE_LIST_TITLE))
+    titleLabel:SetText(GetString(SI_SURVEYZONELIST_LIST_TITLE))
     titleLabel:SetFont("ZoFontGame")
 end
 
 --[[
 -- Restore the GUI's position from saved variables
 --]]
-function SurveyZone.GUI:restorePosition()
+function SurveyZoneList.GUI:restorePosition()
     self.ui:ClearAnchors()
 
     local left = self.savedVars.position.left
@@ -127,7 +127,7 @@ end
 --
 -- @return bool
 --]]
-function SurveyZone.GUI:isLocked()
+function SurveyZoneList.GUI:isLocked()
     return self.savedVars.locked
 end
 
@@ -136,7 +136,7 @@ end
 --
 -- @param bool value
 --]]
-function SurveyZone.GUI:defineLocked(value)
+function SurveyZoneList.GUI:defineLocked(value)
     self.savedVars.locked = value
 
 	self.ui:SetMouseEnabled(not value)
@@ -148,7 +148,7 @@ end
 --
 -- @return bool
 --]]
-function SurveyZone.GUI:isDisplayWithWMap()
+function SurveyZoneList.GUI:isDisplayWithWMap()
     return self.savedVars.displayWithWMap
 end
 
@@ -157,7 +157,7 @@ end
 --
 -- @param bool value
 --]]
-function SurveyZone.GUI:defineDisplayWithWMap(value)
+function SurveyZoneList.GUI:defineDisplayWithWMap(value)
     self.savedVars.displayWithWMap = value
 
 	if value == true then
@@ -172,7 +172,7 @@ end
 --
 -- @return string
 --]]
-function SurveyZone.GUI:obtainDisplayItemText()
+function SurveyZoneList.GUI:obtainDisplayItemText()
     return self.savedVars.displayItemText
 end
 
@@ -181,7 +181,7 @@ end
 --
 -- @param string value
 --]]
-function SurveyZone.GUI:defineDisplayItemText(value)
+function SurveyZoneList.GUI:defineDisplayItemText(value)
     self.savedVars.displayItemText = value
     self:refreshAll()
 end
@@ -189,7 +189,7 @@ end
 --[[
 -- Save the GUI's position to savedVariables
 --]]
-function SurveyZone.GUI:savePosition()
+function SurveyZoneList.GUI:savePosition()
     self.savedVars.position.left = self.ui:GetLeft()
     self.savedVars.position.top  = self.ui:GetTop()
 end
@@ -198,7 +198,7 @@ end
 -- Define GUI as a fragment linked to scenes.
 -- With that, the GUI is hidden when we open a menu (like inventory or map)
 --]]
-function SurveyZone.GUI:defineFragment()
+function SurveyZoneList.GUI:defineFragment()
     self.fragment = ZO_SimpleSceneFragment:New(self.ui)
 
     SCENE_MANAGER:GetScene("hud"):AddFragment(self.fragment)
@@ -210,7 +210,7 @@ end
 -- If the GUI is currently hidden, it will be shown.
 -- If the GUI is currently shown, it will be hidden.
 --]]
-function SurveyZone.GUI:toggle()
+function SurveyZoneList.GUI:toggle()
     self.savedVars.hidden = not self.savedVars.hidden
     self.ui:SetHidden(self.savedVars.hidden)
     self.backUI:SetHidden(self.savedVars.hidden)
@@ -226,20 +226,20 @@ end
 --[[
 -- Refresh all items displayed
 --]]
-function SurveyZone.GUI:refreshAll()
+function SurveyZoneList.GUI:refreshAll()
     self:resetAllItems()
 
     local idx    = 1
     local uiItem = nil
 
-    SurveyZone.ItemSort:exec()
+    SurveyZoneList.ItemSort:exec()
 
-    for listIdx, zoneInfo in pairs(SurveyZone.Collect.orderedList) do
+    for listIdx, zoneInfo in pairs(SurveyZoneList.Collect.orderedList) do
         local zoneName = zoneInfo.name
 
         if zoneInfo.nbUnique > 0 then
             if self.itemList[idx] == nil then
-                self.itemList[idx] = SurveyZone.GUIItem:new()
+                self.itemList[idx] = SurveyZoneList.GUIItem:new()
             end
 
             guiItem = self.itemList[idx]
@@ -261,7 +261,7 @@ end
 --[[
 -- Reset each item values an hide it
 --]]
-function SurveyZone.GUI:resetAllItems()
+function SurveyZoneList.GUI:resetAllItems()
     for idx, guiItem in pairs(self.itemList) do
         if guiItem ~= nil then
             guiItem.used     = false
@@ -275,7 +275,7 @@ end
 --[[
 -- Hide all items
 --]]
-function SurveyZone.GUI:hideAllItems()
+function SurveyZoneList.GUI:hideAllItems()
     for idx, guiItem in pairs(self.itemList) do
         if guiItem ~= nil then
             if guiItem.used == true then
@@ -288,7 +288,7 @@ end
 --[[
 -- Show all used items
 --]]
-function SurveyZone.GUI:showAllItems()
+function SurveyZoneList.GUI:showAllItems()
     for idx, guiItem in pairs(self.itemList) do
         if guiItem ~= nil then
             if guiItem.used == true then
