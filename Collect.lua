@@ -72,7 +72,7 @@ end
 --
 -- @return table
 --]]
-function obtainNewZoneInfo(itemZoneName)
+function SurveyZoneList.Collect:obtainNewZoneInfo(itemZoneName)
     return {
         name        = itemZoneName,
         nameEscaped = SurveyZoneList.ItemSort:espaceLuaStr(itemZoneName:lower()),
@@ -97,7 +97,7 @@ function SurveyZoneList.Collect:updateItemToList(itemZoneName, slotIdx)
     local quantity = GetItemTotalCount(BAG_BACKPACK, slotIdx)
 
     if self.zoneList[itemZoneName] == nil then
-        self.zoneList[itemZoneName] = obtainNewZoneInfo(itemZoneName)
+        self.zoneList[itemZoneName] = self:obtainNewZoneInfo(itemZoneName)
         table.insert(self.orderedList, self.zoneList[itemZoneName])
     end
 
@@ -133,7 +133,7 @@ function SurveyZoneList.Collect:removeItemFromList(itemInfo, slotIdx)
     local itemLink     = itemInfo.itemLink
 
     if self.zoneList[itemZoneName] == nil then
-        self.zoneList[itemZoneName] = obtainNewZoneInfo(itemZoneName)
+        self.zoneList[itemZoneName] = self:obtainNewZoneInfo(itemZoneName)
         table.insert(self.orderedList, self.zoneList[itemZoneName])
     end
 
