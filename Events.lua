@@ -77,3 +77,8 @@ end
 function SurveyZoneList.Events.keybindingsToggle()
     SurveyZoneList.GUI:toggle()
 end
+
+function SurveyZoneList.Events.reticleTryHandlingInteraction(interactionPossible, currentFrameTimeSeconds)
+    return SurveyZoneList.Interaction:updateInteractContext(interactionPossible)
+end
+

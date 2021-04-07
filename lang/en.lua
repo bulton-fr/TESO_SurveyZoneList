@@ -36,4 +36,18 @@ SurveyZoneList.lang.collectFindName = {
     ".*: ",
     "treasure map"
 }
-
+
+SurveyZoneList.lang.surveyAction = {
+    "Cut",
+    "Collect",
+    "Mine"
+}
+
+SurveyZoneList.lang.surveyType = {
+    clothier        = {"clothier"},
+    reagent         = {"alchemist"},
+    enchanting      = {"enchanter"},
+    blacksmithing   = {"blacksmith"},
+    jewerlycrafting = {"jewelry"},
+    woodworking     = {"woodworker"}
+}

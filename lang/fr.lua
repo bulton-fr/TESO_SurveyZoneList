@@ -39,4 +39,18 @@ SurveyZoneList.lang.collectFindName = {
     "carte au trésor du ",
     ".*: ",
 }
-
+
+SurveyZoneList.lang.surveyAction = {
+    "Ramasser",
+    "Extraire",
+    "Couper"
+}
+
+SurveyZoneList.lang.surveyType = {
+    clothier        = {"tailleur"},
+    reagent         = {"alchimiste"},
+    enchanting      = {"enchanteur"},
+    blacksmithing   = {"forgeron"},
+    jewerlycrafting = {"Joaillier"},
+    woodworking     = {"travailleur du bois"}
+}
