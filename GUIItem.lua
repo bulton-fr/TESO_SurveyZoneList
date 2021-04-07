@@ -79,7 +79,7 @@ end
 -- @param integer index The index (position in the list) defined for the item
 --]]
 function SurveyZoneList.GUIItem:definePosition(index)
-    self.ui:SetAnchor(TOPLEFT, self.parentUI, TOPLEFT, 0, index*30)
+    self.ui:SetAnchor(TOPLEFT, self.parentUI, TOPLEFT, 0, (index+1)*30)
 end
 
 --[[

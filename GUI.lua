@@ -15,6 +15,13 @@ SurveyZoneList.GUI.backUI    = nil
 --]]
 SurveyZoneList.GUI.title     = nil
 
+SurveyZoneList.GUI.currentNode = nil
+
+--[[
+-- @var table 
+--]]
+SurveyZoneList.GUI.nodeCounter   = nil
+
 --[[
 -- @var table The fragment used to link the ui to a scene
 --]]
@@ -116,6 +123,24 @@ function SurveyZoneList.GUI:build()
     titleLabel:SetAnchor(TOPLEFT, self.title, TOPLEFT, 5, 3)
     titleLabel:SetText(GetString(SI_SURVEYZONELIST_LIST_TITLE))
     titleLabel:SetFont("ZoFontGame")
+
+	self.currentNode = WindowManager:CreateControl("SurveyZoneListUICurrentNode", self.ui, CT_BACKDROP)
+    self.currentNode:SetAnchor(TOPLEFT, self.ui, TOPLEFT, 0, 30)
+    self.currentNode:SetDimensions(self.ui:GetWidth(), 30)
+    self.currentNode:SetHidden(self.savedVars.hidden)
+	self.currentNode:SetCenterColor(0, 0, 0, .25)
+	self.currentNode:SetEdgeColor(0, 0, 0, .25)
+	self.currentNode:SetEdgeTexture(nil, 1, 1, 0, 0)
+
+    local nodeIcon = WindowManager:CreateControl("SurveyZoneListUICurrentNodeIcon", self.currentNode, CT_TEXTURE)
+    nodeIcon:SetDimensions(25, 25)
+    nodeIcon:SetAnchor(TOPLEFT, self.currentNode, TOPLEFT, 5, 3)
+    nodeIcon:SetTexture("/esoui/art/icons/poi/poi_crafting_complete.dds")
+
+    self.nodeCounter = WindowManager:CreateControl("SurveyZoneListUICurrentNodeCounterLabel", self.currentNode, CT_LABEL)
+    self.nodeCounter:SetAnchor(TOPLEFT, nodeIcon, TOPLEFT, 30, 3)
+    self.nodeCounter:SetText("0/6")
+    self.nodeCounter:SetFont("ZoFontGame")
 end
 
 --[[
@@ -261,6 +286,7 @@ function SurveyZoneList.GUI:toggle()
     self.ui:SetHidden(self.savedVars.hidden)
     self.backUI:SetHidden(self.savedVars.hidden)
     self.title:SetHidden(self.savedVars.hidden)
+    self.currentNode:SetHidden(self.savedVars.hidden)
 
     if self.savedVars.hidden == true then
         self:hideAllItems()
@@ -347,3 +373,13 @@ function SurveyZoneList.GUI:showAllItems()
         end
     end
 end
+
+function SurveyZoneList.GUI:updateCounter()
+    self.nodeCounter:SetText(
+        zo_strformat(
+            "<<1>> / <<2>>",
+            SurveyZoneList.Recolt.counter,
+            SurveyZoneList.Recolt.maxNode
+        )
+    )
+end
