@@ -38,7 +38,8 @@ function SurveyZoneList.Settings:build()
         },
         self:buildSort(1),
         self:buildSort(2),
-        self:buildSort(3)
+        self:buildSort(3),
+        self:buildSort(4),
     }
 
     SurveyZoneList.LAM:RegisterOptionControls(self.panelName, optionsData)
