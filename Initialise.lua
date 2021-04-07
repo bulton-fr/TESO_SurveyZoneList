@@ -21,7 +21,11 @@ function SurveyZoneList:Initialise()
     if SurveyZoneList.savedVariables.sort == nil then
         SurveyZoneList.savedVariables.sort = {}
     end
+    if SurveyZoneList.savedVariables.spot == nil then
+        SurveyZoneList.savedVariables.spot = {}
+    end
 
+    SurveyZoneList.Spot:init()
     SurveyZoneList.Settings:init()
     SurveyZoneList.GUI:init()
     SurveyZoneList.ItemSort:init()

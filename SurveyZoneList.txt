@@ -18,7 +18,9 @@ GUI.lua
 GUIItem.lua
 Interaction.lua
 ItemSort.lua
+Recolt.lua
 Settings.lua
+Spot.lua
 Run.lua
 Bindings.xml
 

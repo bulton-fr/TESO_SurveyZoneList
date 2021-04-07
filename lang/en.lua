@@ -30,6 +30,23 @@ ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_ZONE_NAME", "zone name")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_SURVEY_NB_UNIQUE", "number of unique survey")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_SURVEY_NB_TOTAL", "total number of survey")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_TREASURE_NB_UNIQUE", "number of treasure map")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_TITLE", "Alert")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_DESC", "You can define some alert's type when you are on the last survey's spot")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN", "When do the alert")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN_START", "On the first node")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN_END", "On the last node (beta)")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_USE_ALERT", "Display an alert on the screen")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_USE_SOUND", "Play a sound")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_CHOICE_SOUND", "Sound choice")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_PLAY_SOUND", "Play sound")
+
+-- GUI
+ZO_CreateStringId("SI_SURVEYZONELIST_GUI_REMAINING", "<<1>> remaining")
+ZO_CreateStringId("SI_SURVEYZONELIST_GUI_GO_NEXT_SPOT", "next spot")
+ZO_CreateStringId("SI_SURVEYZONELIST_GUI_GO_NEXT_ZONE", "next zone")
+
+-- Spot - Notify
+ZO_CreateStringId("SI_SURVEYZONELIST_SPOT_NOTIFY_LASTSPOT", "It's the last survey here")
 
 -- Collect
 SurveyZoneList.lang.collectFindName = {

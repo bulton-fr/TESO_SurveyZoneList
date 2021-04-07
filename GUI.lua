@@ -21,6 +21,7 @@ SurveyZoneList.GUI.currentNode = nil
 -- @var table 
 --]]
 SurveyZoneList.GUI.nodeCounter   = nil
+SurveyZoneList.GUI.spotInfo   = nil
 
 --[[
 -- @var table The fragment used to link the ui to a scene
@@ -141,6 +142,16 @@ function SurveyZoneList.GUI:build()
     self.nodeCounter:SetAnchor(TOPLEFT, nodeIcon, TOPLEFT, 30, 3)
     self.nodeCounter:SetText("0/6")
     self.nodeCounter:SetFont("ZoFontGame")
+
+    local spotIcon = WindowManager:CreateControl("SurveyZoneListUICurrentSpotIcon", self.currentNode, CT_TEXTURE)
+    spotIcon:SetDimensions(30, 30)
+    spotIcon:SetAnchor(TOPLEFT, self.currentNode, TOPLEFT, 110, 3)
+    spotIcon:SetTexture("/esoui/art/treeicons/achievements_indexicon_summary_down.dds")
+
+    self.spotInfo = WindowManager:CreateControl("SurveyZoneListUICurrentNodeSpotInfo", self.currentNode, CT_LABEL)
+    self.spotInfo:SetAnchor(TOPLEFT, nodeIcon, TOPLEFT, 140, 3)
+    self.spotInfo:SetText("No info")
+    self.spotInfo:SetFont("ZoFontGame")
 end
 
 --[[
@@ -382,4 +393,16 @@ function SurveyZoneList.GUI:updateCounter()
             SurveyZoneList.Recolt.maxNode
         )
     )
-end
+end
+
+function SurveyZoneList.GUI:updateSpotInfo()
+    local str = GetString(SI_SURVEYZONELIST_GUI_REMAINING)
+
+    if SurveyZoneList.Spot.zoneQuantity == 0 then
+        str = GetString(SI_SURVEYZONELIST_GUI_GO_NEXT_ZONE)
+    elseif SurveyZoneList.Spot.spotQuantity == 0 then
+        str = GetString(SI_SURVEYZONELIST_GUI_GO_NEXT_SPOT)
+    end
+
+    self.spotInfo:SetText(zo_strformat(str, SurveyZoneList.Spot.spotQuantity))
+end

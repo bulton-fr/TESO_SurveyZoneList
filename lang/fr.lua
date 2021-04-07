@@ -31,6 +31,11 @@ ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_SURVEY_NB_UNIQUE", "Nombre un
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_SURVEY_NB_TOTAL", "Nombre total de répérage")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_TREASURE_NB_UNIQUE", "Nombre de carte aux trésors")
 
+-- GUI
+ZO_CreateStringId("SI_SURVEYZONELIST_GUI_REMAINING", "<<1>> restant")
+ZO_CreateStringId("SI_SURVEYZONELIST_GUI_GO_NEXT_SPOT", "Spot suivant")
+ZO_CreateStringId("SI_SURVEYZONELIST_GUI_GO_NEXT_ZONE", "Zone suivante")
+
 -- Collect
 SurveyZoneList.lang.collectFindName = {
     "carte au trésor d'",

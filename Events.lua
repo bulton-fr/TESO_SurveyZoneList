@@ -92,4 +92,12 @@ end
 function SurveyZoneList.Events.onLootClosed(eventCode)
     --d("Loot cloded")
     SurveyZoneList.Recolt:lootClosed()
-end
+end
+
+function SurveyZoneList.Events.onOpenBank(eventCode, bankBag)
+    SurveyZoneList.Spot:setInBank(true)
+end
+
+function SurveyZoneList.Events.onCloseBank(eventCode, bankBag)
+    SurveyZoneList.Spot:setInBank(false)
+end

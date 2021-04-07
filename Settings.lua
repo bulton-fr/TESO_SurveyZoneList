@@ -8,9 +8,10 @@ SurveyZoneList.Settings.panelName = "SurveyZoneListSettingsPanel"
 --]]
 function SurveyZoneList.Settings:init()
     local panelData = {
-        type   = "panel",
-        name   = SurveyZoneList.name,
-        author = "bulton-fr",
+        type               = "panel",
+        name               = SurveyZoneList.name,
+        author             = "bulton-fr",
+        registerForRefresh = true,
     }
 
     SurveyZoneList.LAM:RegisterAddonPanel(self.panelName, panelData)
@@ -40,6 +41,19 @@ function SurveyZoneList.Settings:build()
         self:buildSort(2),
         self:buildSort(3),
         self:buildSort(4),
+        {
+            type = "header",
+            name = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_TITLE)
+        },
+        {
+            type = "description",
+            text = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_DESC)
+        },
+        self:buildAlertWhen(),
+        self:buildAlertUseAlert(),
+        self:buildAlertUseSound(),
+        self:buildAlertChoiceSound(),
+        self:buildAlertPlaySound(),
     }
 
     SurveyZoneList.LAM:RegisterOptionControls(self.panelName, optionsData)
@@ -184,6 +198,153 @@ function SurveyZoneList.Settings:buildSort(pos)
         end,
         setFunc       = function(sortOrder)
             SurveyZoneList.ItemSort:defineOrder(pos, sortOrder)
+        end
+    }
+end
+
+--[[
+-- Return info to build the setting panel for alert : when
+--
+-- @return table
+--]]
+function SurveyZoneList.Settings:buildAlertWhen()
+    return {
+        type          = "dropdown",
+        name          = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN),
+        choices       = {
+            GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN_START),
+            GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN_END),
+        },
+        choicesValues = {
+            SurveyZoneList.Spot.WHEN_START,
+            SurveyZoneList.Spot.WHEN_END
+        },
+        getFunc       = function()
+            return SurveyZoneList.Spot:getWhen()
+        end,
+        setFunc       = function(value)
+            SurveyZoneList.Spot:setWhen(value)
+        end
+    }
+end
+
+--[[
+-- Return info to build the setting panel for alert : use alert (announce)
+--
+-- @return table
+--]]
+function SurveyZoneList.Settings:buildAlertUseAlert()
+    return {
+        type    = "checkbox",
+        name    = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_USE_ALERT),
+        getFunc = function()
+            return SurveyZoneList.Spot:getAlert()
+        end,
+        setFunc = function(value)
+            SurveyZoneList.Spot:setAlert(value)
+        end,
+    }
+end
+
+--[[
+-- Return info to build the setting panel for alert : when
+--
+-- @return table
+--]]
+function SurveyZoneList.Settings:buildAlertUseSound()
+    return {
+        type    = "checkbox",
+        name    = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_USE_SOUND),
+        getFunc = function()
+            return SurveyZoneList.Spot:getSoundUse()
+        end,
+        setFunc = function(value)
+            SurveyZoneList.Spot:setSoundUse(value)
+        end,
+    }
+end
+
+--[[
+-- Return info to build the setting panel for alert : when
+--
+-- @return table
+--]]
+function SurveyZoneList.Settings:buildAlertChoiceSound()
+    local soundsList = {
+        {value = "", name = "No sound"},
+        {value = "NEW_NOTIFICATION", name = "New"},
+        {value = "GROUP_REQUEST_DECLINED", name = "Group Request Declined"},
+        {value = "DEFER_NOTIFICATION", name = "Defer"},
+        {value = "NEW_MAIL", name = "New Mail"},
+        {value = "MAIL_SENT", name = "Mail Sent"},
+        {value = "ACHIEVEMENT_AWARDED", name = "Achievement Awarded"},
+        {value = "QUEST_ACCEPTED", name = "Quest Accepted"},
+        {value = "QUEST_ABANDONED", name = "Quest Abandoned"},
+        {value = "QUEST_COMPLETED", name = "Quest Completed"},
+        {value = "QUEST_STEP_FAILED", name = "Quest Step Failed"},
+        {value = "QUEST_FOCUSED", name = "Quest Focused"},
+        {value = "OBJECTIVE_ACCEPTED", name = "Objective Accepted"},
+        {value = "OBJECTIVE_COMPLETED", name = "Objective Completed"},
+        {value = "OBJECTIVE_DISCOVERED", name = "Objective Discovered"},
+        {value = "INVENTORY_ITEM_JUNKED", name = "Inventory Item Junked"},
+        {value = "INVENTORY_ITEM_UNJUNKED", name = "Inventory Item Unjunked"},
+        {value = "COLLECTIBLE_UNLOCKED", name = "Collectible Unlocked"},
+        {value = "JUSTICE_STATE_CHANGED", name = "Justice State Changed"},
+        {value = "JUSTICE_NOW_KOS", name = "Justice Now KOS"},
+        {value = "JUSTICE_NO_LONGER_KOS", name = "Justice No Longer KOS"},
+        {value = "JUSTICE_GOLD_REMOVED", name = "Justice Gold Removed"},
+        {value = "JUSTICE_ITEM_REMOVED", name = "Justice Item Removed"},
+        {value = "JUSTICE_PICKPOCKET_BONUS", name = "Justice Pickpocket Bonus"},
+        {value = "JUSTICE_PICKPOCKET_FAILED", name = "Justice Pickpocket Failed"},
+        {value = "GROUP_JOIN", name = "Group Join"},
+        {value = "GROUP_LEAVE", name = "Group Leave"},
+        {value = "GROUP_DISBAND", name = "Group Disband"},
+        {value = "TELVAR_GAINED", name = "Telvar Gained"},
+        {value = "TELVAR_LOST", name = "Telvar Lost"},
+        {value = "RAID_TRIAL_COMPLETED", name = "Raid Trial Completed"},
+        {value = "RAID_TRIAL_FAILED", name = "Raid Trial Failed"},
+    }
+
+    local choicesKeys = {}
+    local choicesName = {}
+
+    for idx, soundInfo in ipairs(soundsList) do
+        table.insert(choicesKeys, soundInfo.value)
+        table.insert(choicesName, soundInfo.name)
+    end
+
+    return {
+        type          = "dropdown",
+        name          = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN),
+        choices       = choicesName,
+        choicesValues = choicesKeys,
+        getFunc       = function()
+            return SurveyZoneList.Spot:getSoundId()
+        end,
+        setFunc       = function(idSound)
+            SurveyZoneList.Spot:setSoundId(idSound)
+        end,
+        disabled      = function()
+            return not SurveyZoneList.Spot:getSoundUse()
+        end
+    }
+end
+
+--[[
+-- Return info to build the setting panel for alert : when
+--
+-- @return table
+--]]
+function SurveyZoneList.Settings:buildAlertPlaySound()
+    return {
+        type  = "button",
+        name  = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_PLAY_SOUND),
+        width = "half",
+        func  = function()
+            PlaySound(SOUNDS[SurveyZoneList.Spot:getSoundId()])
+        end,
+        disabled      = function()
+            return not SurveyZoneList.Spot:getSoundUse()
         end
     }
 end
