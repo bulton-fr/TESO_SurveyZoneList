@@ -69,7 +69,15 @@ function SurveyZoneList.GUI:initSavedVarsValues()
     end
 
     if self.savedVars.displayItemText == nil then
-        self.savedVars.displayItemText = "<<1>> : <<2>> - <<3>>"
+        self.savedVars.displayItemText = "<<1>> : <<2>> - <<3>> / <<4>>"
+    end
+    
+    if self.savedVars.displaySurvey == nil then
+        self.savedVars.displaySurvey = true
+    end
+    
+    if self.savedVars.displayTreasure == nil then
+        self.savedVars.displayTreasure = true
     end
 end
 
@@ -187,6 +195,44 @@ function SurveyZoneList.GUI:defineDisplayItemText(value)
 end
 
 --[[
+-- Return info about if 
+--
+-- @return bool
+--]]
+function SurveyZoneList.GUI:isDisplaySurvey()
+    return self.savedVars.displaySurvey
+end
+
+--[[
+-- Define 
+--
+-- @param bool value
+--]]
+function SurveyZoneList.GUI:defineDisplaySurvey(value)
+    self.savedVars.displaySurvey = value
+    self:refreshAll()
+end
+
+--[[
+-- Return info about 
+--
+-- @return bool
+--]]
+function SurveyZoneList.GUI:isDisplayTreasure()
+    return self.savedVars.displayTreasure
+end
+
+--[[
+-- Define 
+--
+-- @param bool value
+--]]
+function SurveyZoneList.GUI:defineDisplayTreasure(value)
+    self.savedVars.displayTreasure = value
+    self:refreshAll()
+end
+
+--[[
 -- Save the GUI's position to savedVariables
 --]]
 function SurveyZoneList.GUI:savePosition()
@@ -237,7 +283,11 @@ function SurveyZoneList.GUI:refreshAll()
     for listIdx, zoneInfo in pairs(SurveyZoneList.Collect.orderedList) do
         local zoneName = zoneInfo.name
 
-        if zoneInfo.nbUnique > 0 then
+        if 
+            (self.savedVars.displaySurvey == true and zoneInfo.survey.nbUnique > 0)
+            or
+            (self.savedVars.displayTreasure == true and zoneInfo.treasure.nbUnique > 0)
+        then
             if self.itemList[idx] == nil then
                 self.itemList[idx] = SurveyZoneList.GUIItem:new()
             end

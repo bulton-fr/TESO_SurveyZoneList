@@ -24,6 +24,8 @@ function SurveyZoneList.Settings:build()
     local optionsData = {
         self:buildGUILocked(),
         self:buildDisplayedWithWorldMap(),
+        self:buildDisplaySurvey(),
+        self:buildDisplayTreasure(),
         self:buildCurrentZoneFirst(),
         self:buildDisplayItemText(),
         {
@@ -74,6 +76,42 @@ function SurveyZoneList.Settings:buildDisplayedWithWorldMap()
         end,
         setFunc = function(value)
             SurveyZoneList.GUI:defineDisplayWithWMap(value)
+        end,
+    }
+end
+
+--[[
+-- Return info to build the setting panel for "display survey"
+--
+-- @return table
+--]]
+function SurveyZoneList.Settings:buildDisplaySurvey()
+    return {
+        type    = "checkbox",
+        name    = GetString(SI_SURVEYZONELIST_SETTINGS_DISPLAY_SURVEY),
+        getFunc = function()
+            return SurveyZoneList.GUI:isDisplaySurvey()
+        end,
+        setFunc = function(value)
+            SurveyZoneList.GUI:defineDisplaySurvey(value)
+        end,
+    }
+end
+
+--[[
+-- Return info to build the setting panel for "display treasure"
+--
+-- @return table
+--]]
+function SurveyZoneList.Settings:buildDisplayTreasure()
+    return {
+        type    = "checkbox",
+        name    = GetString(SI_SURVEYZONELIST_SETTINGS_DISPLAY_TREASURE),
+        getFunc = function()
+            return SurveyZoneList.GUI:isDisplayTreasure()
+        end,
+        setFunc = function(value)
+            SurveyZoneList.GUI:defineDisplayTreasure(value)
         end,
     }
 end
@@ -130,13 +168,15 @@ function SurveyZoneList.Settings:buildSort(pos)
         name          = zo_strformat("#<<1>>", pos),
         choices       = {
             GetString(SI_SURVEYZONELIST_SETTINGS_SORT_ZONE_NAME),
-            GetString(SI_SURVEYZONELIST_SETTINGS_SORT_NB_UNIQUE),
-            GetString(SI_SURVEYZONELIST_SETTINGS_SORT_NB_SURVEY),
+            GetString(SI_SURVEYZONELIST_SETTINGS_SORT_SURVEY_NB_UNIQUE),
+            GetString(SI_SURVEYZONELIST_SETTINGS_SORT_SURVEY_NB_TOTAL),
+            GetString(SI_SURVEYZONELIST_SETTINGS_SORT_TREASURE_NB_UNIQUE),
         },
         choicesValues = {
             SurveyZoneList.ItemSort.ORDER_TYPE_ZONE_NAME,
-            SurveyZoneList.ItemSort.ORDER_TYPE_NB_UNIQUE,
-            SurveyZoneList.ItemSort.ORDER_TYPE_NB_SURVEY
+            SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_UNIQUE,
+            SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_TOTAL,
+            SurveyZoneList.ItemSort.ORDER_TYPE_TREASURE_NB_UNIQUE,
         },
         getFunc       = function()
             return SurveyZoneList.ItemSort:obtainOrder()[pos]

@@ -6,10 +6,11 @@
 ## SavedVariables: SurveyZoneListSavedVariables
 ## DependsOn: LibAddonMenu-2.0>=30
 
+Initialise.lua
+
 lang\en.lua
 lang\$(language).lua
 
-Initialise.lua
 Collect.lua
 Events.lua
 GUI.lua

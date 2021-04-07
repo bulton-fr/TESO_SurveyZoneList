@@ -45,12 +45,18 @@ function SurveyZoneList.Collect:readItem(slotIdx)
         return nil
     end
 
-    if subType ~= SPECIALIZED_ITEMTYPE_TROPHY_SURVEY_REPORT then
+    if subType ~= SPECIALIZED_ITEMTYPE_TROPHY_SURVEY_REPORT and subType ~= SPECIALIZED_ITEMTYPE_TROPHY_TREASURE_MAP then
         return nil
     end
 
-    local itemName     = zo_strformat("<<1>>", GetItemName(BAG_BACKPACK, slotIdx))
-    local itemZoneName = itemName:match(".*: (.*)")
+    local itemName     = zo_strformat("<<1>>", GetItemName(BAG_BACKPACK, slotIdx)):lower()
+    local itemZoneName = nil
+
+    for matchIdx, prefix in pairs(SurveyZoneList.lang.collectFindName) do
+        if itemZoneName == nil then
+            itemZoneName = itemName:match(prefix.."(.*)")
+        end
+    end
 
     -- Some survey map name not corresponding to the pattern, so a security to
     -- avoid error.
@@ -58,7 +64,7 @@ function SurveyZoneList.Collect:readItem(slotIdx)
         return nil
     end
 
-    if itemZoneName:find("I$") ~= nil or itemZoneName:find("V$") ~= nil or itemZoneName:find("X$") ~= nil then
+    if itemZoneName:find("i$") ~= nil or itemZoneName:find("v$") ~= nil or itemZoneName:find("x$") ~= nil then
         itemZoneName = itemZoneName:match("(.*) %a+")
     end
 
@@ -76,8 +82,14 @@ function SurveyZoneList.Collect:obtainNewZoneInfo(itemZoneName)
     return {
         name        = itemZoneName,
         nameEscaped = SurveyZoneList.ItemSort:espaceLuaStr(itemZoneName:lower()),
-        nbUnique    = 0,
-        nbSurvey    = 0,
+        survey      = {
+            nbUnique = 0,
+            nbTotal  = 0
+        },
+        treasure    = {
+            nbUnique = 0,
+            nbTotal  = 0
+        },
         list        = {}
     }
 end
@@ -95,22 +107,30 @@ function SurveyZoneList.Collect:updateItemToList(itemZoneName, slotIdx)
 
     local itemLink = GetItemLink(BAG_BACKPACK, slotIdx)
     local quantity = GetItemTotalCount(BAG_BACKPACK, slotIdx)
+    local subType  = select(2, GetItemLinkItemType(itemLink))
 
     if self.zoneList[itemZoneName] == nil then
         self.zoneList[itemZoneName] = self:obtainNewZoneInfo(itemZoneName)
         table.insert(self.orderedList, self.zoneList[itemZoneName])
     end
 
+    local itemTypeCounter = nil
+    if subType == SPECIALIZED_ITEMTYPE_TROPHY_SURVEY_REPORT then
+        itemTypeCounter = self.zoneList[itemZoneName].survey
+    elseif subType == SPECIALIZED_ITEMTYPE_TROPHY_TREASURE_MAP then
+        itemTypeCounter = self.zoneList[itemZoneName].treasure
+    end
+
     local oldQuantity = 0
     if self.zoneList[itemZoneName].list[itemLink] == nil then
-        self.zoneList[itemZoneName].nbUnique = self.zoneList[itemZoneName].nbUnique + 1
+        itemTypeCounter.nbUnique = itemTypeCounter.nbUnique + 1
     else
         oldQuantity = self.zoneList[itemZoneName].list[itemLink]
     end
 
     self.zoneList[itemZoneName].list[itemLink] = quantity
 
-    self.zoneList[itemZoneName].nbSurvey = self.zoneList[itemZoneName].nbSurvey + (quantity - oldQuantity)
+    itemTypeCounter.nbTotal = itemTypeCounter.nbTotal + (quantity - oldQuantity)
 
     self.slotList[slotIdx] = {
         zoneName = itemZoneName,
@@ -131,23 +151,31 @@ function SurveyZoneList.Collect:removeItemFromList(itemInfo, slotIdx)
 
     local itemZoneName = itemInfo.zoneName
     local itemLink     = itemInfo.itemLink
+    local subType      = select(2, GetItemLinkItemType(itemLink))
 
     if self.zoneList[itemZoneName] == nil then
         self.zoneList[itemZoneName] = self:obtainNewZoneInfo(itemZoneName)
         table.insert(self.orderedList, self.zoneList[itemZoneName])
     end
 
-    self.zoneList[itemZoneName].nbUnique = self.zoneList[itemZoneName].nbUnique - 1
-    if self.zoneList[itemZoneName].nbUnique < 0 then
-        self.zoneList[itemZoneName].nbUnique = 0
+    local itemTypeCounter = nil
+    if subType == SPECIALIZED_ITEMTYPE_TROPHY_SURVEY_REPORT then
+        itemTypeCounter = self.zoneList[itemZoneName].survey
+    elseif subType == SPECIALIZED_ITEMTYPE_TROPHY_TREASURE_MAP then
+        itemTypeCounter = self.zoneList[itemZoneName].treasure
+    end
+
+    itemTypeCounter.nbUnique = itemTypeCounter.nbUnique - 1
+    if itemTypeCounter.nbUnique < 0 then
+        itemTypeCounter.nbUnique = 0
     end
 
     if self.zoneList[itemZoneName].list[itemLink] ~= nil then
-        local oldQuantity =  self.zoneList[itemZoneName].list[itemLink]
+        local oldQuantity = self.zoneList[itemZoneName].list[itemLink]
 
-        self.zoneList[itemZoneName].nbSurvey = self.zoneList[itemZoneName].nbSurvey - oldQuantity
-        if self.zoneList[itemZoneName].nbSurvey < 0 then
-            self.zoneList[itemZoneName].nbSurvey = 0
+        itemTypeCounter.nbTotal = itemTypeCounter.nbTotal - oldQuantity
+        if itemTypeCounter.nbTotal < 0 then
+            itemTypeCounter.nbTotal = 0
         end
 
         self.zoneList[itemZoneName].list[itemLink] = nil

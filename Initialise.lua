@@ -1,5 +1,7 @@
 SurveyZoneList = {}
 
+SurveyZoneList.lang = {}
+
 SurveyZoneList.name           = "Survey Zone List"
 SurveyZoneList.dirName        = "SurveyZoneList"
 SurveyZoneList.savedVariables = nil
