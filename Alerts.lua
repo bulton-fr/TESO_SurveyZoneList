@@ -172,10 +172,7 @@ function SurveyZoneList.Alerts:updateQuantity(spotQuantity, zoneQuantity)
 
     if self:uiOpen() == false then
         self:updateGUI()
-
-        if spotQuantity == 0 then
-            self:execAlerts(self.WHEN_START)
-        end
+        self:execAlerts(self.WHEN_START)
     end
 end
 
@@ -189,8 +186,10 @@ function SurveyZoneList.Alerts:execAlerts(when)
         return
     end
 
-    self:displayAnnounce()
-    self:playSong()
+    if self.spotQuantity == 0 then
+        self:displayAnnounce()
+        self:playSong()
+    end
 end
 
 --[[
