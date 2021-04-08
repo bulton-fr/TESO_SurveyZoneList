@@ -52,9 +52,9 @@ function SurveyZoneList.Collect:readItem(slotIdx)
     local itemName     = zo_strformat("<<1>>", GetItemName(BAG_BACKPACK, slotIdx)):lower()
     local itemZoneName = nil
 
-    for matchIdx, prefix in pairs(SurveyZoneList.lang.collectFindName) do
+    for matchIdx, matchStr in pairs(SurveyZoneList.lang.collectFindName) do
         if itemZoneName == nil then
-            itemZoneName = itemName:match(prefix.."(.*)")
+            itemZoneName = itemName:match(matchStr)
         end
     end
 

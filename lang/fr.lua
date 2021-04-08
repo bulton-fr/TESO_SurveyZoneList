@@ -50,11 +50,11 @@ ZO_CreateStringId("SI_SURVEYZONELIST_SPOT_NOTIFY_LASTSPOT", "C'est le dernier re
 
 -- Collect
 SurveyZoneList.lang.collectFindName = {
-    "carte au trésor d'",
-    "carte au trésor de ",
-    "carte au trésor des ",
-    "carte au trésor du ",
-    ".*: ",
+    "carte au trésor d'(.*)",
+    "carte au trésor de (.*)",
+    "carte au trésor des (.*)",
+    "carte au trésor du (.*)",
+    ".*: (.*)",
 }
 
 SurveyZoneList.lang.surveyAction = {

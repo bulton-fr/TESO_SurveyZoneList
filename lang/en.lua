@@ -56,8 +56,8 @@ ZO_CreateStringId("SI_SURVEYZONELIST_SPOT_NOTIFY_LASTSPOT", "It's the last surve
 
 -- Collect
 SurveyZoneList.lang.collectFindName = {
-    ".*: ",
-    "treasure map"
+    "(.*) treasure map",
+    ".*: (.*)",
 }
 
 SurveyZoneList.lang.surveyAction = {
