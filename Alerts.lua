@@ -39,7 +39,7 @@ SurveyZoneList.Alerts.zoneQuantity = 0
 -- Initialise the Spot system
 --]]
 function SurveyZoneList.Alerts:init()
-    self.savedVars = SurveyZoneList.savedVariables.spot
+    self.savedVars = SurveyZoneList.savedVariables.alerts
 
     self:initSavedVarsValues()
     self:initOpenBagEvent()

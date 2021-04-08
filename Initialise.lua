@@ -21,8 +21,9 @@ function SurveyZoneList:Initialise()
     if SurveyZoneList.savedVariables.sort == nil then
         SurveyZoneList.savedVariables.sort = {}
     end
-    if SurveyZoneList.savedVariables.spot == nil then
-        SurveyZoneList.savedVariables.spot = {}
+    if SurveyZoneList.savedVariables.alerts == nil then
+        SurveyZoneList.savedVariables.alerts = {}
+    end
     end
 
     SurveyZoneList.Alerts:init()
