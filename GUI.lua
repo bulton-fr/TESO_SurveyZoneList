@@ -3,36 +3,43 @@ SurveyZoneList.GUI = {}
 --[[
 -- @var table The ui TolLevelWindow
 --]]
-SurveyZoneList.GUI.ui        = nil
+SurveyZoneList.GUI.ui = nil
 
 --[[
 -- @var table The ui backdrop
 --]]
-SurveyZoneList.GUI.backUI    = nil
+SurveyZoneList.GUI.backUI = nil
 
 --[[
 -- @var table The first item of the list which display list title
 --]]
-SurveyZoneList.GUI.title     = nil
+SurveyZoneList.GUI.title = nil
 
+--[[
+-- @var table The second item of the list which display info about the current survey
+--]]
 SurveyZoneList.GUI.currentNode = nil
 
 --[[
--- @var table 
+-- @var table Label which display the number of node has been looted on the spot
 --]]
-SurveyZoneList.GUI.nodeCounter   = nil
-SurveyZoneList.GUI.spotInfo   = nil
+SurveyZoneList.GUI.nodeCounter = nil
+
+--[[
+-- @var tabke Label which display info about the current spot
+--]]
+SurveyZoneList.GUI.spotInfo = nil
 
 --[[
 -- @var table The fragment used to link the ui to a scene
 --]]
-SurveyZoneList.GUI.fragment  = nil
+SurveyZoneList.GUI.fragment = nil
 
 --[[
 -- @var table A list of all GUIItems created. We cannot remove an ui item from
 -- memory, so we keep it all created items here to reuse it when the list is refreshed.
 --]]
-SurveyZoneList.GUI.itemList  = {}
+SurveyZoneList.GUI.itemList = {}
 
 --[[
 -- @var table All saved variables dedicated to the gui.
@@ -385,6 +392,9 @@ function SurveyZoneList.GUI:showAllItems()
     end
 end
 
+--[[
+-- Update the node counter value displayed
+--]]
 function SurveyZoneList.GUI:updateCounter()
     self.nodeCounter:SetText(
         zo_strformat(
@@ -395,6 +405,9 @@ function SurveyZoneList.GUI:updateCounter()
     )
 end
 
+--[[
+-- Update the spot info displayed
+--]]
 function SurveyZoneList.GUI:updateSpotInfo()
     local str = GetString(SI_SURVEYZONELIST_GUI_REMAINING)
 

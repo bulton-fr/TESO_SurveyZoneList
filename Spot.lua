@@ -1,6 +1,13 @@
 SurveyZoneList.Spot = {}
 
+--[[
+-- @const WHEN_START string The value for when alerts should be executed on the first survey's node
+--]]
 SurveyZoneList.Spot.WHEN_START = "BEFORE"
+
+--[[
+-- @const WHEN_END string The value for when alerts should be executed on the last survey's node
+--]]
 SurveyZoneList.Spot.WHEN_END = "END"
 
 --[[
@@ -8,11 +15,29 @@ SurveyZoneList.Spot.WHEN_END = "END"
 --]]
 SurveyZoneList.Spot.savedVars = nil
 
+--[[
+-- @var bool inBag To know if we have the bag displayed
+--]]
 SurveyZoneList.Spot.inBag = false
+
+--[[
+-- @var bool inBank To know if we have the bank displayed
+--]]
 SurveyZoneList.Spot.inBank = false
+
+--[[
+-- @var int The quantity of survey for the current spot
+--]]
 SurveyZoneList.Spot.spotQuantity = 0
+
+--[[
+-- @var int The quantity of survey for the current zone
+--]]
 SurveyZoneList.Spot.zoneQuantity = 0
 
+--[[
+-- Initialise the Spot system
+--]]
 function SurveyZoneList.Spot:init()
     self.savedVars = SurveyZoneList.savedVariables.spot
 
@@ -43,6 +68,9 @@ function SurveyZoneList.Spot:initSavedVarsValues()
     end
 end
 
+--[[
+-- Add an event for when the inventory scene is trigger
+--]]
 function SurveyZoneList.Spot:initOpenBagEvent()
     local inventoryScene = SCENE_MANAGER:GetScene("inventory")
     inventoryScene:RegisterCallback("StateChange", function(oldState, newState)
@@ -50,46 +78,94 @@ function SurveyZoneList.Spot:initOpenBagEvent()
     end)
 end
 
+--[[
+-- Set the value of inBank
+--
+-- @param bool newState
+--]]
 function SurveyZoneList.Spot:setInBank(newState)
     self.inBank = newState
 end
 
+--[[
+-- Get the value of sound.use
+--]]
 function SurveyZoneList.Spot:getSoundUse()
     return self.savedVars.sound.use
 end
 
+--[[
+-- Set the value of sound.use
+--
+-- @param bool newState
+--]]
 function SurveyZoneList.Spot:setSoundUse(useSound)
     self.savedVars.sound.use = useSound
 end
 
+--[[
+-- Get the value of sound.id
+--]]
 function SurveyZoneList.Spot:getSoundId()
     return self.savedVars.sound.id
 end
 
+--[[
+-- Set the value of sound.id
+--
+-- @param string idSound
+--]]
 function SurveyZoneList.Spot:setSoundId(idSound)
     self.savedVars.sound.id = idSound
 end
 
+--[[
+-- Get the value of alert
+--]]
 function SurveyZoneList.Spot:getAlert()
     return self.savedVars.alert
 end
 
+--[[
+-- Set the value of alert
+--
+-- @param bool useAlert
+--]]
 function SurveyZoneList.Spot:setAlert(useAlert)
     self.savedVars.alert = useAlert
 end
 
+--[[
+-- Get the value of when
+--]]
 function SurveyZoneList.Spot:getWhen()
     return self.savedVars.when
 end
 
+--[[
+-- Set the value of when
+--
+-- @param string when
+--]]
 function SurveyZoneList.Spot:setWhen(when)
     self.savedVars.when = when
 end
 
+--[[
+-- Check if the bag or the bank is displayed/opened
+--
+-- @return bool
+--]]
 function SurveyZoneList.Spot:uiOpen()
     return self.inBag or self.inBank
 end
 
+--[[
+-- Change about the quantity of survey
+--
+-- @var int spotQuantity The survey's quantity for the spot which have changed
+-- @var int zoneQuantity The survey's quantity for the zone which have changed
+--]]
 function SurveyZoneList.Spot:updateQuantity(spotQuantity, zoneQuantity)
     self.spotQuantity = spotQuantity
     self.zoneQuantity = zoneQuantity
@@ -103,6 +179,11 @@ function SurveyZoneList.Spot:updateQuantity(spotQuantity, zoneQuantity)
     end
 end
 
+--[[
+-- Execute all configured alert for a specific time
+--
+-- @param string when If the function is called on the first or the last node
+--]]
 function SurveyZoneList.Spot:execAlerts(when)
     if when ~= self.savedVars.when then
         return
@@ -112,10 +193,16 @@ function SurveyZoneList.Spot:execAlerts(when)
     self:playSong()
 end
 
+--[[
+-- Call the update of the spot info in the GUI
+--]]
 function SurveyZoneList.Spot:updateGUI()
     SurveyZoneList.GUI:updateSpotInfo()
 end
 
+--[[
+-- Display the announce about the last spot
+--]]
 function SurveyZoneList.Spot:displayAnnounce()
     if self.savedVars.alert == false then
         return
@@ -127,6 +214,9 @@ function SurveyZoneList.Spot:displayAnnounce()
 	CENTER_SCREEN_ANNOUNCE:AddMessageWithParams(messageParams)
 end
 
+--[[
+-- Play sound about the last spot
+--]]
 function SurveyZoneList.Spot:playSong()
     if self.savedVars.sound.use == false then
         return

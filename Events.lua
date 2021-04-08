@@ -78,6 +78,9 @@ function SurveyZoneList.Events.keybindingsToggle()
     SurveyZoneList.GUI:toggle()
 end
 
+--[[
+-- PostHook on TryHandlingInteraction, called when something can be interacted with it
+--]]
 function SurveyZoneList.Events.reticleTryHandlingInteraction(interactionPossible, currentFrameTimeSeconds)
     return SurveyZoneList.Interaction:updateInteractContext(interactionPossible)
 end
@@ -91,10 +94,16 @@ function SurveyZoneList.Events.onLootClosed(eventCode)
     SurveyZoneList.Recolt:lootClosed()
 end
 
+--[[
+-- Called when a bank is opened
+--]]
 function SurveyZoneList.Events.onOpenBank(eventCode, bankBag)
     SurveyZoneList.Spot:setInBank(true)
 end
 
+--[[
+-- Called when a bank is closed
+--]]
 function SurveyZoneList.Events.onCloseBank(eventCode, bankBag)
     SurveyZoneList.Spot:setInBank(false)
 end

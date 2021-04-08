@@ -247,7 +247,7 @@ function SurveyZoneList.Settings:buildAlertUseAlert()
 end
 
 --[[
--- Return info to build the setting panel for alert : when
+-- Return info to build the setting panel for alert : use sound
 --
 -- @return table
 --]]
@@ -265,7 +265,7 @@ function SurveyZoneList.Settings:buildAlertUseSound()
 end
 
 --[[
--- Return info to build the setting panel for alert : when
+-- Return info to build the setting panel for alert : sound choice
 --
 -- @return table
 --]]
@@ -331,7 +331,7 @@ function SurveyZoneList.Settings:buildAlertChoiceSound()
 end
 
 --[[
--- Return info to build the setting panel for alert : when
+-- Return info to build the setting panel for alert : play chosen sound
 --
 -- @return table
 --]]

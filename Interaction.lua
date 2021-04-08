@@ -1,8 +1,22 @@
 SurveyZoneList.Interaction = {}
 
+--[[
+-- @var string The last interactible item see
+--]]
 SurveyZoneList.Interaction.lastName = nil
+
+--[[
+-- @var bool If the last interactible item is a survey node or not
+--]]
 SurveyZoneList.Interaction.lastIsSurvey = false
 
+--[[
+-- Called by PostHook on TryHandlingInteraction
+-- Call the check if the interaction is with a survey node; If true, display
+-- the craft icon before the interaction item's name
+--
+-- @var bool interactionPossible (see TryHandlingInteraction method)
+--]]
 function SurveyZoneList.Interaction:updateInteractContext(interactionPossible)
     if not interactionPossible then
         return nil
@@ -41,6 +55,14 @@ function SurveyZoneList.Interaction:updateInteractContext(interactionPossible)
     end
 end
 
+--[[
+-- Check if the interacionName and the action match with a survey node
+--
+-- @param string action Action label feasible on the item
+-- @param string interactionName The name of the interactible item
+--
+-- @return bool
+--]]
 function SurveyZoneList.Interaction:isSurveyNode(action, interactionName)
     local actionAllowed = false
     for avActionIdx, availableAction in pairs(SurveyZoneList.lang.surveyAction) do
