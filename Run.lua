@@ -8,7 +8,6 @@ EVENT_MANAGER:AddFilterForEvent("SurveyZoneListMoveItem", EVENT_INVENTORY_SINGLE
 EVENT_MANAGER:AddFilterForEvent("SurveyZoneListMoveItem", EVENT_INVENTORY_SINGLE_SLOT_UPDATE, REGISTER_FILTER_INVENTORY_UPDATE_REASON, INVENTORY_UPDATE_REASON_DEFAULT)
 
 EVENT_MANAGER:RegisterForEvent("SurveyZoneListLootClosed", EVENT_LOOT_CLOSED, SurveyZoneList.Events.onLootClosed)
-EVENT_MANAGER:RegisterForEvent("SurveyZoneListLootReceived", EVENT_LOOT_RECEIVED, SurveyZoneList.Events.onLootReceived)
 
 EVENT_MANAGER:RegisterForEvent("SurveyZoneListOpenBank", EVENT_OPEN_BANK, SurveyZoneList.Events.onOpenBank)
 EVENT_MANAGER:RegisterForEvent("SurveyZoneListOpenBank", EVENT_CLOSE_BANK, SurveyZoneList.Events.onCloseBank)

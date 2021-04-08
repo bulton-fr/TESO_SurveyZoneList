@@ -42,10 +42,6 @@ function SurveyZoneList.Interaction:updateInteractContext(interactionPossible)
 end
 
 function SurveyZoneList.Interaction:isSurveyNode(action, interactionName)
-    -- if interactionName == nil then
-    --     interactionName = select(2, GetGameCameraInteractableActionInfo())
-    -- end
-
     local actionAllowed = false
     for avActionIdx, availableAction in pairs(SurveyZoneList.lang.surveyAction) do
         if action == availableAction then
