@@ -43,6 +43,15 @@ function SurveyZoneList.Settings:build()
         self:buildSort(4),
         {
             type = "header",
+            name = GetString(SI_SURVEYZONELIST_SETTINGS_INTERACTION_TITLE)
+        },
+        {
+            type = "description",
+            text = GetString(SI_SURVEYZONELIST_SETTINGS_INTERACTION_DESC)
+        },
+        self:buildInteractionShowIcon(),
+        {
+            type = "header",
             name = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_TITLE)
         },
         {
@@ -202,6 +211,25 @@ function SurveyZoneList.Settings:buildSort(pos)
     }
 end
 
+
+--[[
+-- Return info to build the setting panel for interaction : show icon
+--
+-- @return table
+--]]
+function SurveyZoneList.Settings:buildInteractionShowIcon()
+    return {
+        type    = "checkbox",
+        name    = GetString(SI_SURVEYZONELIST_SETTINGS_INTERACTION_SHOW_ICON),
+        getFunc = function()
+            return SurveyZoneList.Interaction:getShowIcon()
+        end,
+        setFunc = function(value)
+            SurveyZoneList.Interaction:setShowIcon(value)
+        end,
+    }
+end
+
 --[[
 -- Return info to build the setting panel for alert : when
 --
@@ -315,7 +343,7 @@ function SurveyZoneList.Settings:buildAlertChoiceSound()
 
     return {
         type          = "dropdown",
-        name          = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN),
+        name          = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_CHOICE_SOUND),
         choices       = choicesName,
         choicesValues = choicesKeys,
         getFunc       = function()

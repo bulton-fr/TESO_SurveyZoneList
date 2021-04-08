@@ -1,6 +1,11 @@
 SurveyZoneList.Interaction = {}
 
 --[[
+-- @var table All saved variables dedicated to the interaction system.
+--]]
+SurveyZoneList.Interaction.savedVars = nil
+
+--[[
 -- @var string The last interactible item see
 --]]
 SurveyZoneList.Interaction.lastName = nil
@@ -9,6 +14,37 @@ SurveyZoneList.Interaction.lastName = nil
 -- @var bool If the last interactible item is a survey node or not
 --]]
 SurveyZoneList.Interaction.lastIsSurvey = false
+
+--[[
+-- Initialise the Spot system
+--]]
+function SurveyZoneList.Interaction:init()
+    self.savedVars = SurveyZoneList.savedVariables.interaction
+    self:initSavedVarsValues()
+end
+
+--[[
+-- Initialise with a default value all saved variables dedicated to the interaction system
+--]]
+function SurveyZoneList.Interaction:initSavedVarsValues()
+    if self.savedVars.showIcon == nil then
+        self.savedVars.showIcon = true
+    end
+end
+
+--[[
+-- Get the showIcon
+--]]
+function SurveyZoneList.Interaction:getShowIcon()
+    return self.savedVars.showIcon
+end
+
+--[[
+-- Set the showIcon
+--]]
+function SurveyZoneList.Interaction:setShowIcon(showIcon)
+    self.savedVars.showIcon = showIcon
+end
 
 --[[
 -- Called by PostHook on TryHandlingInteraction
@@ -44,14 +80,16 @@ function SurveyZoneList.Interaction:updateInteractContext(interactionPossible)
             return nil
         end
 
-        RETICLE.interactContext:SetText(
-            zo_iconTextFormat(
-                '/esoui/art/icons/poi/poi_crafting_complete.dds',
-                40,
-                40,
-                self.lastName
+        if self.savedVars.showIcon == true then
+            RETICLE.interactContext:SetText(
+                zo_iconTextFormat(
+                    '/esoui/art/icons/poi/poi_crafting_complete.dds',
+                    40,
+                    40,
+                    self.lastName
+                )
             )
-        )
+        end
     end
 end
 

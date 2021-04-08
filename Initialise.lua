@@ -24,9 +24,12 @@ function SurveyZoneList:Initialise()
     if SurveyZoneList.savedVariables.alerts == nil then
         SurveyZoneList.savedVariables.alerts = {}
     end
+    if SurveyZoneList.savedVariables.interaction == nil then
+        SurveyZoneList.savedVariables.interaction = {}
     end
 
     SurveyZoneList.Alerts:init()
+    SurveyZoneList.Interaction:init()
     SurveyZoneList.Settings:init()
     SurveyZoneList.GUI:init()
     SurveyZoneList.ItemSort:init()

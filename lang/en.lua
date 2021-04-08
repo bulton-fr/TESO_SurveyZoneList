@@ -24,12 +24,18 @@ ZO_CreateStringId(
     .."<<4>> Number of treasure map in the zone\n\n"
     .."Default value is <<1>> : <<2>> - <<3>> / <<4>>"
 )
+-- Settings : Sort
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_TITLE", "Sort")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_DESC", "You can define the order priority used to sort the zone list.")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_ZONE_NAME", "zone name")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_SURVEY_NB_UNIQUE", "number of unique survey")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_SURVEY_NB_TOTAL", "total number of survey")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_TREASURE_NB_UNIQUE", "number of treasure map")
+-- Settings : Interaction
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_INTERACTION_TITLE", "Interaction")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_INTERACTION_DESC", "Action to do when you can interact with a survey's node")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_INTERACTION_SHOW_ICON", "Display a craft icon on survey's node")
+-- Settings : Alert
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_TITLE", "Alerts")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_DESC", "You can define some alert's type when you are on the last survey's spot")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN", "When do the alert")
