@@ -30,11 +30,23 @@ ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_ZONE_NAME", "Nom de la zone")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_SURVEY_NB_UNIQUE", "Nombre unique de repérage")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_SURVEY_NB_TOTAL", "Nombre total de répérage")
 ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_SORT_TREASURE_NB_UNIQUE", "Nombre de carte aux trésors")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_TITLE", "Alertes")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_DESC", "Vous pouvez définir plusieurs types d'alerte qui se déclancheront lorsque vous serez sur le dernier spot d'un repérage")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN", "Quand lancer l'alerte")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN_START", "Sur le 1er point de ressource")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN_END", "Sur le dernier point de ressource (beta)")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_USE_ALERT", "Afficher une alerte à l'écran")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_USE_SOUND", "Jouer un son")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_CHOICE_SOUND", "Choix du son")
+ZO_CreateStringId("SI_SURVEYZONELIST_SETTINGS_ALERT_PLAY_SOUND", "Jouer le son choisi")
 
 -- GUI
 ZO_CreateStringId("SI_SURVEYZONELIST_GUI_REMAINING", "<<1>> restant")
 ZO_CreateStringId("SI_SURVEYZONELIST_GUI_GO_NEXT_SPOT", "Spot suivant")
 ZO_CreateStringId("SI_SURVEYZONELIST_GUI_GO_NEXT_ZONE", "Zone suivante")
+
+-- Spot - Notify
+ZO_CreateStringId("SI_SURVEYZONELIST_SPOT_NOTIFY_LASTSPOT", "C'est le dernier repérage ici")
 
 -- Collect
 SurveyZoneList.lang.collectFindName = {
