@@ -33,6 +33,6 @@ function SurveyZoneList.Recolt:lootClosed()
     SurveyZoneList.GUI:updateCounter()
 
     if self.counter == self.maxNode then
-        SurveyZoneList.Spot:execAlerts(SurveyZoneList.Spot.WHEN_END)
+        SurveyZoneList.Alerts:execAlerts(SurveyZoneList.Alerts.WHEN_END)
     end
 end

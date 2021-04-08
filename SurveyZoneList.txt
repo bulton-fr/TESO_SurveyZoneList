@@ -12,6 +12,7 @@ lang\en.lua
 lang\$(language).lua
 lang\nodeName.lua
 
+Alerts.lua
 Collect.lua
 Events.lua
 GUI.lua
@@ -20,7 +21,6 @@ Interaction.lua
 ItemSort.lua
 Recolt.lua
 Settings.lua
-Spot.lua
 Run.lua
 Bindings.xml
 

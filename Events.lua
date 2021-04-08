@@ -98,12 +98,12 @@ end
 -- Called when a bank is opened
 --]]
 function SurveyZoneList.Events.onOpenBank(eventCode, bankBag)
-    SurveyZoneList.Spot:setInBank(true)
+    SurveyZoneList.Alerts:setInBank(true)
 end
 
 --[[
 -- Called when a bank is closed
 --]]
 function SurveyZoneList.Events.onCloseBank(eventCode, bankBag)
-    SurveyZoneList.Spot:setInBank(false)
+    SurveyZoneList.Alerts:setInBank(false)
 end

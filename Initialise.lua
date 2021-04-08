@@ -25,7 +25,7 @@ function SurveyZoneList:Initialise()
         SurveyZoneList.savedVariables.spot = {}
     end
 
-    SurveyZoneList.Spot:init()
+    SurveyZoneList.Alerts:init()
     SurveyZoneList.Settings:init()
     SurveyZoneList.GUI:init()
     SurveyZoneList.ItemSort:init()

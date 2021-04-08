@@ -216,14 +216,14 @@ function SurveyZoneList.Settings:buildAlertWhen()
             GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_WHEN_END),
         },
         choicesValues = {
-            SurveyZoneList.Spot.WHEN_START,
-            SurveyZoneList.Spot.WHEN_END
+            SurveyZoneList.Alerts.WHEN_START,
+            SurveyZoneList.Alerts.WHEN_END
         },
         getFunc       = function()
-            return SurveyZoneList.Spot:getWhen()
+            return SurveyZoneList.Alerts:getWhen()
         end,
         setFunc       = function(value)
-            SurveyZoneList.Spot:setWhen(value)
+            SurveyZoneList.Alerts:setWhen(value)
         end
     }
 end
@@ -238,10 +238,10 @@ function SurveyZoneList.Settings:buildAlertUseAlert()
         type    = "checkbox",
         name    = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_USE_ALERT),
         getFunc = function()
-            return SurveyZoneList.Spot:getAlert()
+            return SurveyZoneList.Alerts:getAlert()
         end,
         setFunc = function(value)
-            SurveyZoneList.Spot:setAlert(value)
+            SurveyZoneList.Alerts:setAlert(value)
         end,
     }
 end
@@ -256,10 +256,10 @@ function SurveyZoneList.Settings:buildAlertUseSound()
         type    = "checkbox",
         name    = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_USE_SOUND),
         getFunc = function()
-            return SurveyZoneList.Spot:getSoundUse()
+            return SurveyZoneList.Alerts:getSoundUse()
         end,
         setFunc = function(value)
-            SurveyZoneList.Spot:setSoundUse(value)
+            SurveyZoneList.Alerts:setSoundUse(value)
         end,
     }
 end
@@ -319,13 +319,13 @@ function SurveyZoneList.Settings:buildAlertChoiceSound()
         choices       = choicesName,
         choicesValues = choicesKeys,
         getFunc       = function()
-            return SurveyZoneList.Spot:getSoundId()
+            return SurveyZoneList.Alerts:getSoundId()
         end,
         setFunc       = function(idSound)
-            SurveyZoneList.Spot:setSoundId(idSound)
+            SurveyZoneList.Alerts:setSoundId(idSound)
         end,
         disabled      = function()
-            return not SurveyZoneList.Spot:getSoundUse()
+            return not SurveyZoneList.Alerts:getSoundUse()
         end
     }
 end
@@ -341,10 +341,10 @@ function SurveyZoneList.Settings:buildAlertPlaySound()
         name  = GetString(SI_SURVEYZONELIST_SETTINGS_ALERT_PLAY_SOUND),
         width = "half",
         func  = function()
-            PlaySound(SOUNDS[SurveyZoneList.Spot:getSoundId()])
+            PlaySound(SOUNDS[SurveyZoneList.Alerts:getSoundId()])
         end,
         disabled      = function()
-            return not SurveyZoneList.Spot:getSoundUse()
+            return not SurveyZoneList.Alerts:getSoundUse()
         end
     }
 end

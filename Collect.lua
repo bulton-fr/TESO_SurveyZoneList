@@ -139,7 +139,7 @@ function SurveyZoneList.Collect:updateItemToList(itemZoneName, slotIdx)
 
     if quantity < oldQuantity and oldQuantity > 0 and subType == SPECIALIZED_ITEMTYPE_TROPHY_SURVEY_REPORT then
         SurveyZoneList.Recolt:reset()
-        SurveyZoneList.Spot:updateQuantity(quantity, itemTypeCounter.nbTotal)
+        SurveyZoneList.Alerts:updateQuantity(quantity, itemTypeCounter.nbTotal)
     end
 end
 
@@ -190,7 +190,7 @@ function SurveyZoneList.Collect:removeItemFromList(itemInfo, slotIdx)
 
     if subType == SPECIALIZED_ITEMTYPE_TROPHY_SURVEY_REPORT then
         SurveyZoneList.Recolt:reset()
-        SurveyZoneList.Spot:updateQuantity(0, itemTypeCounter.nbTotal)
+        SurveyZoneList.Alerts:updateQuantity(0, itemTypeCounter.nbTotal)
     end
 end
 

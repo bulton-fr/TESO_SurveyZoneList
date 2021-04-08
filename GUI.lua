@@ -411,11 +411,11 @@ end
 function SurveyZoneList.GUI:updateSpotInfo()
     local str = GetString(SI_SURVEYZONELIST_GUI_REMAINING)
 
-    if SurveyZoneList.Spot.zoneQuantity == 0 then
+    if SurveyZoneList.Alerts.zoneQuantity == 0 then
         str = GetString(SI_SURVEYZONELIST_GUI_GO_NEXT_ZONE)
-    elseif SurveyZoneList.Spot.spotQuantity == 0 then
+    elseif SurveyZoneList.Alerts.spotQuantity == 0 then
         str = GetString(SI_SURVEYZONELIST_GUI_GO_NEXT_SPOT)
     end
 
-    self.spotInfo:SetText(zo_strformat(str, SurveyZoneList.Spot.spotQuantity))
+    self.spotInfo:SetText(zo_strformat(str, SurveyZoneList.Alerts.spotQuantity))
 end

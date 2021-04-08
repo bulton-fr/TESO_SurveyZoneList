@@ -1,44 +1,44 @@
-SurveyZoneList.Spot = {}
+SurveyZoneList.Alerts = {}
 
 --[[
 -- @const WHEN_START string The value for when alerts should be executed on the first survey's node
 --]]
-SurveyZoneList.Spot.WHEN_START = "BEFORE"
+SurveyZoneList.Alerts.WHEN_START = "BEFORE"
 
 --[[
 -- @const WHEN_END string The value for when alerts should be executed on the last survey's node
 --]]
-SurveyZoneList.Spot.WHEN_END = "END"
+SurveyZoneList.Alerts.WHEN_END = "END"
 
 --[[
 -- @var table All saved variables dedicated to the spot system.
 --]]
-SurveyZoneList.Spot.savedVars = nil
+SurveyZoneList.Alerts.savedVars = nil
 
 --[[
 -- @var bool inBag To know if we have the bag displayed
 --]]
-SurveyZoneList.Spot.inBag = false
+SurveyZoneList.Alerts.inBag = false
 
 --[[
 -- @var bool inBank To know if we have the bank displayed
 --]]
-SurveyZoneList.Spot.inBank = false
+SurveyZoneList.Alerts.inBank = false
 
 --[[
 -- @var int The quantity of survey for the current spot
 --]]
-SurveyZoneList.Spot.spotQuantity = 0
+SurveyZoneList.Alerts.spotQuantity = 0
 
 --[[
 -- @var int The quantity of survey for the current zone
 --]]
-SurveyZoneList.Spot.zoneQuantity = 0
+SurveyZoneList.Alerts.zoneQuantity = 0
 
 --[[
 -- Initialise the Spot system
 --]]
-function SurveyZoneList.Spot:init()
+function SurveyZoneList.Alerts:init()
     self.savedVars = SurveyZoneList.savedVariables.spot
 
     self:initSavedVarsValues()
@@ -48,7 +48,7 @@ end
 --[[
 -- Initialise with a default value all saved variables dedicated to the spot system
 --]]
-function SurveyZoneList.Spot:initSavedVarsValues()
+function SurveyZoneList.Alerts:initSavedVarsValues()
     if self.savedVars.sound == nil then
         self.savedVars.sound = {}
     end
@@ -71,10 +71,10 @@ end
 --[[
 -- Add an event for when the inventory scene is trigger
 --]]
-function SurveyZoneList.Spot:initOpenBagEvent()
+function SurveyZoneList.Alerts:initOpenBagEvent()
     local inventoryScene = SCENE_MANAGER:GetScene("inventory")
     inventoryScene:RegisterCallback("StateChange", function(oldState, newState)
-        SurveyZoneList.Spot.inBag = newState
+        SurveyZoneList.Alerts.inBag = newState
     end)
 end
 
@@ -83,14 +83,14 @@ end
 --
 -- @param bool newState
 --]]
-function SurveyZoneList.Spot:setInBank(newState)
+function SurveyZoneList.Alerts:setInBank(newState)
     self.inBank = newState
 end
 
 --[[
 -- Get the value of sound.use
 --]]
-function SurveyZoneList.Spot:getSoundUse()
+function SurveyZoneList.Alerts:getSoundUse()
     return self.savedVars.sound.use
 end
 
@@ -99,14 +99,14 @@ end
 --
 -- @param bool newState
 --]]
-function SurveyZoneList.Spot:setSoundUse(useSound)
+function SurveyZoneList.Alerts:setSoundUse(useSound)
     self.savedVars.sound.use = useSound
 end
 
 --[[
 -- Get the value of sound.id
 --]]
-function SurveyZoneList.Spot:getSoundId()
+function SurveyZoneList.Alerts:getSoundId()
     return self.savedVars.sound.id
 end
 
@@ -115,14 +115,14 @@ end
 --
 -- @param string idSound
 --]]
-function SurveyZoneList.Spot:setSoundId(idSound)
+function SurveyZoneList.Alerts:setSoundId(idSound)
     self.savedVars.sound.id = idSound
 end
 
 --[[
 -- Get the value of alert
 --]]
-function SurveyZoneList.Spot:getAlert()
+function SurveyZoneList.Alerts:getAlert()
     return self.savedVars.alert
 end
 
@@ -131,14 +131,14 @@ end
 --
 -- @param bool useAlert
 --]]
-function SurveyZoneList.Spot:setAlert(useAlert)
+function SurveyZoneList.Alerts:setAlert(useAlert)
     self.savedVars.alert = useAlert
 end
 
 --[[
 -- Get the value of when
 --]]
-function SurveyZoneList.Spot:getWhen()
+function SurveyZoneList.Alerts:getWhen()
     return self.savedVars.when
 end
 
@@ -147,7 +147,7 @@ end
 --
 -- @param string when
 --]]
-function SurveyZoneList.Spot:setWhen(when)
+function SurveyZoneList.Alerts:setWhen(when)
     self.savedVars.when = when
 end
 
@@ -156,7 +156,7 @@ end
 --
 -- @return bool
 --]]
-function SurveyZoneList.Spot:uiOpen()
+function SurveyZoneList.Alerts:uiOpen()
     return self.inBag or self.inBank
 end
 
@@ -166,7 +166,7 @@ end
 -- @var int spotQuantity The survey's quantity for the spot which have changed
 -- @var int zoneQuantity The survey's quantity for the zone which have changed
 --]]
-function SurveyZoneList.Spot:updateQuantity(spotQuantity, zoneQuantity)
+function SurveyZoneList.Alerts:updateQuantity(spotQuantity, zoneQuantity)
     self.spotQuantity = spotQuantity
     self.zoneQuantity = zoneQuantity
 
@@ -184,7 +184,7 @@ end
 --
 -- @param string when If the function is called on the first or the last node
 --]]
-function SurveyZoneList.Spot:execAlerts(when)
+function SurveyZoneList.Alerts:execAlerts(when)
     if when ~= self.savedVars.when then
         return
     end
@@ -196,14 +196,14 @@ end
 --[[
 -- Call the update of the spot info in the GUI
 --]]
-function SurveyZoneList.Spot:updateGUI()
+function SurveyZoneList.Alerts:updateGUI()
     SurveyZoneList.GUI:updateSpotInfo()
 end
 
 --[[
 -- Display the announce about the last spot
 --]]
-function SurveyZoneList.Spot:displayAnnounce()
+function SurveyZoneList.Alerts:displayAnnounce()
     if self.savedVars.alert == false then
         return
     end
@@ -217,7 +217,7 @@ end
 --[[
 -- Play sound about the last spot
 --]]
-function SurveyZoneList.Spot:playSong()
+function SurveyZoneList.Alerts:playSong()
     if self.savedVars.sound.use == false then
         return
     end
