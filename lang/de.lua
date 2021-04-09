@@ -1,4 +1,4 @@
--- ENGLISH LANGUAGE LOCALIZATION
+-- GERMAN LANGUAGE LOCALIZATION
 
 -- Collect
 SurveyZoneList.lang.collectFindName = {
