@@ -12,15 +12,6 @@ SurveyZoneList.lang.surveyAction = {
     "Sammeln"
 }
 
-SurveyZoneList.lang.surveyType = {
-    clothier        = {"clothier"},
-    reagent         = {"alchemist"},
-    enchanting      = {"enchanter"},
-    blacksmithing   = {"blacksmith"},
-    jewerlycrafting = {"jewelry"},
-    woodworking     = {"woodworker"}
-}
-
 SurveyZoneList.lang.nodeName = {
     "^hervorragendes",
     "^buschige",

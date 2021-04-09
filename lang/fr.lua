@@ -63,15 +63,6 @@ SurveyZoneList.lang.surveyAction = {
     "Couper"
 }
 
-SurveyZoneList.lang.surveyType = {
-    clothier        = {"tailleur"},
-    reagent         = {"alchimiste"},
-    enchanting      = {"enchanteur"},
-    blacksmithing   = {"forgeron"},
-    jewerlycrafting = {"Joaillier"},
-    woodworking     = {"travailleur du bois"}
-}
-
 SurveyZoneList.lang.nodeName = {
     -- couture & alchmie
     "luxuriant$",

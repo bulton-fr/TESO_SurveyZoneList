@@ -13,15 +13,6 @@ SurveyZoneList.lang.surveyAction = {
     "Добыть"
 }
 
-SurveyZoneList.lang.surveyType = {
-    clothier        = {"clothier"},
-    reagent         = {"alchemist"},
-    enchanting      = {"enchanter"},
-    blacksmithing   = {"blacksmith"},
-    jewerlycrafting = {"jewelry"},
-    woodworking     = {"woodworker"}
-}
-
 SurveyZoneList.lang.nodeName = {
     "^нетронутый",
     "^изобилие",
