@@ -73,6 +73,7 @@ function SurveyZoneList.Interaction:updateInteractContext(interactionPossible)
         end
 
         if sameInteraction == false then
+            -- d(zo_strformat("<<1>> / <<2>>", action, name))
             self.lastIsSurvey = self:isSurveyNode(action, name)
         end
 
