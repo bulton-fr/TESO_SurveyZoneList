@@ -10,7 +10,6 @@ Initialise.lua
 
 lang\en.lua
 lang\$(language).lua
-lang\nodeName.lua
 
 Alerts.lua
 Collect.lua

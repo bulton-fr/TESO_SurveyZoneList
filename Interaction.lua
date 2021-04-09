@@ -115,12 +115,7 @@ function SurveyZoneList.Interaction:isSurveyNode(action, interactionName)
         return false
     end
 
-    local language     = GetCVar("Language.2")
-    local nodeNameList = SurveyZoneList.lang.nodeName[language]
-
-    if nodeNameList == nil then
-        return false
-    end
+    local nodeNameList = SurveyZoneList.lang.nodeName
 
     for nodeNameIdx, nodeNamePartToFind in pairs(nodeNameList) do
         if string.find(interactionName:lower(), nodeNamePartToFind) then

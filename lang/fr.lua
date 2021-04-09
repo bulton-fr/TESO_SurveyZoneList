@@ -71,3 +71,22 @@ SurveyZoneList.lang.surveyType = {
     jewerlycrafting = {"Joaillier"},
     woodworking     = {"travailleur du bois"}
 }
+
+SurveyZoneList.lang.nodeName = {
+    -- couture & alchmie
+    "luxuriant$",
+    "luxuriante$",
+    "^piège du fourreur$",
+
+    -- enchantement
+    "protéiforme$",
+
+    -- joiallerie
+    "^veine de .* riche$",
+
+    -- forge
+    "^minerai de .* riche$",
+
+    -- travail du bois
+    "de premier choix$"
+}
