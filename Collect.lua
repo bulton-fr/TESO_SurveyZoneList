@@ -65,7 +65,30 @@ function SurveyZoneList.Collect:readItem(slotIdx)
     end
 
     if itemZoneName:find("i$") ~= nil or itemZoneName:find("v$") ~= nil or itemZoneName:find("x$") ~= nil then
-        itemZoneName = itemZoneName:match("(.*) %a+")
+        local matchItemZoneName = nil
+        local patternList = {
+            -- Normal space
+            "^(.*) i+$", -- "i" or "ii" or "iii" ...
+            "^(.*) iv$", -- only "iv"
+            "^(.*) vi*$", -- "v" or "vi" or "vii" ...
+            "^(.*) xi*$", -- "x" or "xi" or "xii" ...
+            -- Strange space (seem to be used in DE and RU surveys)
+            "^(.*) i+$",
+            "^(.*) iv$",
+            "^(.*) vi*$",
+            "^(.*) xi*$",
+        }
+
+        for patternIdx, pattern in ipairs(patternList) do
+            matchItemZoneName = string.match(itemZoneName, pattern)
+
+            --d(zo_strformat("<<1>> / <<2>> / <<3>>", itemZoneName, pattern, matchItemZoneName))
+            
+            if matchItemZoneName ~= nil then
+                itemZoneName = matchItemZoneName
+                break
+            end
+        end
     end
 
     return itemZoneName
