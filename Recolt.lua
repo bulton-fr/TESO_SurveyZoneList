@@ -11,6 +11,18 @@ SurveyZoneList.Recolt.maxNode = 6
 SurveyZoneList.Recolt.counter = 0
 
 --[[
+-- @var bool if the loot received event is when there is a new survey interaction or not
+--]]
+SurveyZoneList.Recolt.newSurveyInteraction = false
+
+--[[
+-- Set the value of newSurveyInteraction
+--]]
+function SurveyZoneList.Recolt:setNewSurveyInteraction(value)
+    self.newSurveyInteraction = value
+end
+
+--[[
 -- Reset the counter of node recolted
 --]]
 function SurveyZoneList.Recolt:reset()
@@ -19,20 +31,23 @@ function SurveyZoneList.Recolt:reset()
 end
 
 --[[
--- Called when the loot window is closed
+-- Called when a loot item is received
 -- Check if the last interaction is a survey, and update the counter if true
 -- Also call alerts systems if the number of spot recolted is equal to max node
 --]]
-function SurveyZoneList.Recolt:lootClosed()
-
-    if SurveyZoneList.Interaction.lastIsSurvey == false then
-        return
-    end
-
-    self.counter = self.counter + 1
-    SurveyZoneList.GUI:updateCounter()
-
-    if self.counter == self.maxNode then
-        SurveyZoneList.Alerts:execAlerts(SurveyZoneList.Alerts.WHEN_END)
+function SurveyZoneList.Recolt:lootReceived()
+    if self.newSurveyInteraction == true then
+        self.newSurveyInteraction = false
+        
+        if SurveyZoneList.Interaction.lastIsSurvey == false then
+            return
+        end
+    
+        self.counter = self.counter + 1
+        SurveyZoneList.GUI:updateCounter()
+    
+        if self.counter == self.maxNode then
+            SurveyZoneList.Alerts:execAlerts(SurveyZoneList.Alerts.WHEN_END)
+        end
     end
 end

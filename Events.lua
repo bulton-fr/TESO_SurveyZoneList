@@ -86,12 +86,10 @@ function SurveyZoneList.Events.reticleTryHandlingInteraction(interactionPossible
 end
 
 --[[
--- Called when the loot window is closed.
--- With auto-loot enabled, call when all the loot has been get
+-- Called when a loot is received
 --]]
-function SurveyZoneList.Events.onLootClosed(eventCode)
-    --d("Loot cloded")
-    SurveyZoneList.Recolt:lootClosed()
+function SurveyZoneList.Events.onLootReceived(eventCode, receivedBy, itemName)
+    SurveyZoneList.Recolt:lootReceived()
 end
 
 --[[
