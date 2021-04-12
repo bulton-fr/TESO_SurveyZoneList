@@ -81,8 +81,6 @@ function SurveyZoneList.Interaction:updateInteractContext(interactionPossible)
             return nil
         end
 
-        SurveyZoneList.Recolt:setNewSurveyInteraction(true)
-
         if self.savedVars.showIcon == true then
             RETICLE.interactContext:SetText(
                 zo_iconTextFormat(

@@ -86,6 +86,15 @@ function SurveyZoneList.Events.reticleTryHandlingInteraction(interactionPossible
 end
 
 --[[
+-- Called whe we do an interaction with something
+--]]
+function SurveyZoneList.Events.onClientInteract(eventCode, result, interactTargetName)
+    if SurveyZoneList.Interaction.lastIsSurvey == true then
+        SurveyZoneList.Recolt:setNewSurveyInteraction(true)
+    end
+end
+
+--[[
 -- Called when a loot is received
 --]]
 function SurveyZoneList.Events.onLootReceived(eventCode, receivedBy, itemName)
