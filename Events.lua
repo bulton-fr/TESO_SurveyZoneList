@@ -74,7 +74,7 @@ end
 --[[
 -- Called when the user trigger the keybinds for "toggle GUI"
 --]]
-function SurveyZoneList.Events.keybindingsToggle()
+function SurveyZoneList.Events.keybindingsToggleGUI()
     SurveyZoneList.GUI:toggle()
 end
 

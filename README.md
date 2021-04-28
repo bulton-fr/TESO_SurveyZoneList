@@ -92,7 +92,7 @@ Methods :
 * `SurveyZoneList.Events.onLoadScreen` : Called after each load screen
 * `SurveyZoneList.Events.onMoveItem` : Called when a item move in the character bag (filter on event)
 * `SurveyZoneList.Events.onGuiMoveStop` : Called when the user stop to move the GUI
-* `SurveyZoneList.Events.keybindingsToggle` : Called when the user trigger the keybinds for "toggle GUI"
+* `SurveyZoneList.Events.keybindingsToggleGUI` : Called when the user trigger the keybinds for "toggle GUI"
 
 ### GUI.lua
 
