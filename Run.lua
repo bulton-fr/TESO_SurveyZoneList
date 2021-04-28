@@ -14,3 +14,10 @@ EVENT_MANAGER:RegisterForEvent("SurveyZoneListOpenBank", EVENT_OPEN_BANK, Survey
 EVENT_MANAGER:RegisterForEvent("SurveyZoneListOpenBank", EVENT_CLOSE_BANK, SurveyZoneList.Events.onCloseBank)
 
 ZO_PostHook(RETICLE, "TryHandlingInteraction", SurveyZoneList.Events.reticleTryHandlingInteraction)
+
+-- Define slash commands to show/hide the gui
+if SLASH_COMMANDS["/szl"] == nil then
+    SLASH_COMMANDS["/szl"] = SurveyZoneList.Events.commandToggleGUI
+end
+
+SLASH_COMMANDS["/surveyzonelist"] = SurveyZoneList.Events.commandToggleGUI

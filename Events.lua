@@ -72,6 +72,13 @@ function SurveyZoneList.Events.onGuiMoveStop()
 end
 
 --[[
+-- Called when the user use the slash command for "toggle GUI"
+--]]
+function SurveyZoneList.Events.commandToggleGUI()
+    SurveyZoneList.GUI:toggle()
+end
+
+--[[
 -- Called when the user trigger the keybinds for "toggle GUI"
 --]]
 function SurveyZoneList.Events.keybindingsToggleGUI()
