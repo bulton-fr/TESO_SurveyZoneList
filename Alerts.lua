@@ -74,7 +74,11 @@ end
 function SurveyZoneList.Alerts:initOpenBagEvent()
     local inventoryScene = SCENE_MANAGER:GetScene("inventory")
     inventoryScene:RegisterCallback("StateChange", function(oldState, newState)
-        SurveyZoneList.Alerts.inBag = newState
+        if newState == 'hidden' then
+            SurveyZoneList.Alerts.inBag = false
+        elseif newState == 'shown' then
+            SurveyZoneList.Alerts.inBag = false
+        end
     end)
 end
 
