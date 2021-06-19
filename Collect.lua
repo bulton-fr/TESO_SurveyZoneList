@@ -160,7 +160,7 @@ function SurveyZoneList.Collect:updateItemToList(itemZoneName, slotIdx)
         itemLink = itemLink
     }
 
-    if quantity < oldQuantity then
+    if quantity < oldQuantity and subType == SPECIALIZED_ITEMTYPE_TROPHY_SURVEY_REPORT then
         SurveyZoneList.Recolt:reset()
         SurveyZoneList.Alerts:updateQuantity(quantity, itemTypeCounter.nbTotal)
     end
@@ -211,8 +211,10 @@ function SurveyZoneList.Collect:removeItemFromList(itemInfo, slotIdx)
 
     self.slotList[slotIdx] = nil
 
-    SurveyZoneList.Recolt:reset()
-    SurveyZoneList.Alerts:updateQuantity(0, itemTypeCounter.nbTotal)
+	if subType == SPECIALIZED_ITEMTYPE_TROPHY_SURVEY_REPORT then
+		SurveyZoneList.Recolt:reset()
+		SurveyZoneList.Alerts:updateQuantity(0, itemTypeCounter.nbTotal)
+	end
 end
 
 --[[
