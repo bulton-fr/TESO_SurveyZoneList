@@ -6,11 +6,17 @@ SurveyZoneList.ItemSort.savedVars = nil
 -- @var string The current zone name
 SurveyZoneList.ItemSort.currentZoneName = ""
 
--- @const ORDER_TYPE_NB_UNIQUE The value for an order by number of unique survey point
-SurveyZoneList.ItemSort.ORDER_TYPE_NB_UNIQUE = "nbUnique"
+-- @const ORDER_TYPE_SURVEY_NB_UNIQUE The value for an order by number of unique survey point
+SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_UNIQUE = "surveyNbUnique"
 
--- @const ORDER_TYPE_NB_SURVEY The value for an order by the total number of survey in a zone
-SurveyZoneList.ItemSort.ORDER_TYPE_NB_SURVEY = "nbSurvey"
+-- @const ORDER_TYPE_SURVEY_NB_TOTAL The value for an order by the total number of survey in a zone
+SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_TOTAL = "surveyNbTotal"
+
+
+SurveyZoneList.ItemSort.ORDER_TYPE_TREASURE_NB_UNIQUE = "treasureNbUnique"
+
+
+-- SurveyZoneList.ItemSort.ORDER_TYPE_TREASURE_NB_TOTAL = "treasureNbTotal"
 
 -- @const ORDER_TYPE_ZONE_NAME The value for an order by zone name
 SurveyZoneList.ItemSort.ORDER_TYPE_ZONE_NAME = "zoneName"
@@ -30,8 +36,10 @@ end
 function SurveyZoneList.ItemSort:initSavedVarsValues()
     if self.savedVars.order == nil then
         self.savedVars.order = {
-            self.ORDER_TYPE_NB_UNIQUE,
-            self.ORDER_TYPE_NB_SURVEY,
+            self.ORDER_TYPE_SURVEY_NB_UNIQUE,
+            self.ORDER_TYPE_SURVEY_NB_TOTAL,
+            self.ORDER_TYPE_TREASURE_NB_UNIQUE,
+            self.ORDER_TYPE_TREASURE_NB_TOTAL,
             self.ORDER_TYPE_ZONE_NAME
         }
     end
@@ -161,23 +169,39 @@ function SurveyZoneList.ItemSort.sortZoneList(left, right)
     -- We never compare to identical zone name, so not need a elseif for it.
     -- It's because there is not duplicate of zone name in the sorted table.
 
-    if orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_UNIQUE and left.nbUnique == right.nbUnique then
+    if orderType == SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_UNIQUE and left.survey.nbUnique == right.survey.nbUnique then
         orderType = sortOrder[2]
-    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_SURVEY and left.nbSurvey == right.nbSurvey then
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_TOTAL and left.survey.nbTotal == right.survey.nbTotal then
+        orderType = sortOrder[2]
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_TREASURE_NB_UNIQUE and left.treasure.nbUnique == right.treasure.nbUnique then
         orderType = sortOrder[2]
     end
-    if orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_UNIQUE and left.nbUnique == right.nbUnique then
+    if orderType == SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_UNIQUE and left.survey.nbUnique == right.survey.nbUnique then
         orderType = sortOrder[3]
-    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_SURVEY and left.nbSurvey == right.nbSurvey then
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_TOTAL and left.survey.nbTotal == right.survey.nbTotal then
         orderType = sortOrder[3]
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_TREASURE_NB_UNIQUE and left.treasure.nbUnique == right.treasure.nbUnique then
+        orderType = sortOrder[3]
+    end
+    if orderType == SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_UNIQUE and left.survey.nbUnique == right.survey.nbUnique then
+        orderType = sortOrder[4]
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_TOTAL and left.survey.nbTotal == right.survey.nbTotal then
+        orderType = sortOrder[4]
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_TREASURE_NB_UNIQUE and left.treasure.nbUnique == right.treasure.nbUnique then
+        orderType = sortOrder[4]
     end
     
     -- Do the comparison
     if orderType == SurveyZoneList.ItemSort.ORDER_TYPE_ZONE_NAME then
         return left.name < right.name
-    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_UNIQUE then
-        return left.nbUnique > right.nbUnique
-    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_NB_SURVEY then
-        return left.nbSurvey > right.nbSurvey
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_UNIQUE then
+        return left.survey.nbUnique > right.survey.nbUnique
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_SURVEY_NB_TOTAL then
+        return left.survey.nbTotal > right.survey.nbTotal
+    elseif orderType == SurveyZoneList.ItemSort.ORDER_TYPE_TREASURE_NB_UNIQUE then
+        return left.treasure.nbUnique > right.treasure.nbUnique
     end
+
+    -- security, sort function must always return an boolean value
+    return false
 end

@@ -1,5 +1,7 @@
 SurveyZoneList = {}
 
+SurveyZoneList.lang = {}
+
 SurveyZoneList.name           = "Survey Zone List"
 SurveyZoneList.dirName        = "SurveyZoneList"
 SurveyZoneList.savedVariables = nil
@@ -19,7 +21,15 @@ function SurveyZoneList:Initialise()
     if SurveyZoneList.savedVariables.sort == nil then
         SurveyZoneList.savedVariables.sort = {}
     end
+    if SurveyZoneList.savedVariables.alerts == nil then
+        SurveyZoneList.savedVariables.alerts = {}
+    end
+    if SurveyZoneList.savedVariables.interaction == nil then
+        SurveyZoneList.savedVariables.interaction = {}
+    end
 
+    SurveyZoneList.Alerts:init()
+    SurveyZoneList.Interaction:init()
     SurveyZoneList.Settings:init()
     SurveyZoneList.GUI:init()
     SurveyZoneList.ItemSort:init()

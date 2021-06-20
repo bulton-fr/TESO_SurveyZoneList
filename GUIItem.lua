@@ -79,17 +79,22 @@ end
 -- @param integer index The index (position in the list) defined for the item
 --]]
 function SurveyZoneList.GUIItem:definePosition(index)
-    self.ui:SetAnchor(TOPLEFT, self.parentUI, TOPLEFT, 0, index*30)
+    self.ui:SetAnchor(TOPLEFT, self.parentUI, TOPLEFT, 0, (index+1)*30)
 end
 
 --[[
 -- Update the text to display
 --]]
 function SurveyZoneList.GUIItem:updateText()
+    local function ucfirst(str)
+        return (str:gsub("^%l", string.upper))
+    end
+
     self.uiLabel:SetText(zo_strformat(
         SurveyZoneList.GUI:obtainDisplayItemText(),
-        self.zoneName,
-        self.zoneInfo.nbUnique,
-        self.zoneInfo.nbSurvey
+        ucfirst(self.zoneName),
+        self.zoneInfo.survey.nbUnique,
+        self.zoneInfo.survey.nbTotal,
+        self.zoneInfo.treasure.nbUnique
     ))
 end

@@ -72,8 +72,52 @@ function SurveyZoneList.Events.onGuiMoveStop()
 end
 
 --[[
+-- Called when the user use the slash command for "toggle GUI"
+--]]
+function SurveyZoneList.Events.commandToggleGUI()
+    SurveyZoneList.GUI:toggle()
+end
+
+--[[
 -- Called when the user trigger the keybinds for "toggle GUI"
 --]]
-function SurveyZoneList.Events.keybindingsToggle()
+function SurveyZoneList.Events.keybindingsToggleGUI()
     SurveyZoneList.GUI:toggle()
+end
+
+--[[
+-- PostHook on TryHandlingInteraction, called when something can be interacted with it
+--]]
+function SurveyZoneList.Events.reticleTryHandlingInteraction(interactionPossible, currentFrameTimeSeconds)
+    return SurveyZoneList.Interaction:updateInteractContext(interactionPossible)
+end
+
+--[[
+-- Called whe we do an interaction with something
+--]]
+function SurveyZoneList.Events.onClientInteract(eventCode, result, interactTargetName)
+    if SurveyZoneList.Interaction.lastIsSurvey == true then
+        SurveyZoneList.Recolt:setNewSurveyInteraction(true)
+    end
+end
+
+--[[
+-- Called when a loot is received
+--]]
+function SurveyZoneList.Events.onLootReceived(eventCode, receivedBy, itemName)
+    SurveyZoneList.Recolt:lootReceived()
+end
+
+--[[
+-- Called when a bank is opened
+--]]
+function SurveyZoneList.Events.onOpenBank(eventCode, bankBag)
+    SurveyZoneList.Alerts:setInBank(true)
+end
+
+--[[
+-- Called when a bank is closed
+--]]
+function SurveyZoneList.Events.onCloseBank(eventCode, bankBag)
+    SurveyZoneList.Alerts:setInBank(false)
 end

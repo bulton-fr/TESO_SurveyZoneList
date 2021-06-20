@@ -3,28 +3,43 @@ SurveyZoneList.GUI = {}
 --[[
 -- @var table The ui TolLevelWindow
 --]]
-SurveyZoneList.GUI.ui        = nil
+SurveyZoneList.GUI.ui = nil
 
 --[[
 -- @var table The ui backdrop
 --]]
-SurveyZoneList.GUI.backUI    = nil
+SurveyZoneList.GUI.backUI = nil
 
 --[[
 -- @var table The first item of the list which display list title
 --]]
-SurveyZoneList.GUI.title     = nil
+SurveyZoneList.GUI.title = nil
+
+--[[
+-- @var table The second item of the list which display info about the current survey
+--]]
+SurveyZoneList.GUI.currentNode = nil
+
+--[[
+-- @var table Label which display the number of node has been looted on the spot
+--]]
+SurveyZoneList.GUI.nodeCounter = nil
+
+--[[
+-- @var tabke Label which display info about the current spot
+--]]
+SurveyZoneList.GUI.spotInfo = nil
 
 --[[
 -- @var table The fragment used to link the ui to a scene
 --]]
-SurveyZoneList.GUI.fragment  = nil
+SurveyZoneList.GUI.fragment = nil
 
 --[[
 -- @var table A list of all GUIItems created. We cannot remove an ui item from
 -- memory, so we keep it all created items here to reuse it when the list is refreshed.
 --]]
-SurveyZoneList.GUI.itemList  = {}
+SurveyZoneList.GUI.itemList = {}
 
 --[[
 -- @var table All saved variables dedicated to the gui.
@@ -69,7 +84,15 @@ function SurveyZoneList.GUI:initSavedVarsValues()
     end
 
     if self.savedVars.displayItemText == nil then
-        self.savedVars.displayItemText = "<<1>> : <<2>> - <<3>>"
+        self.savedVars.displayItemText = "<<1>> : <<2>> - <<3>> / <<4>>"
+    end
+    
+    if self.savedVars.displaySurvey == nil then
+        self.savedVars.displaySurvey = true
+    end
+    
+    if self.savedVars.displayTreasure == nil then
+        self.savedVars.displayTreasure = true
     end
 end
 
@@ -108,6 +131,34 @@ function SurveyZoneList.GUI:build()
     titleLabel:SetAnchor(TOPLEFT, self.title, TOPLEFT, 5, 3)
     titleLabel:SetText(GetString(SI_SURVEYZONELIST_LIST_TITLE))
     titleLabel:SetFont("ZoFontGame")
+
+	self.currentNode = WindowManager:CreateControl("SurveyZoneListUICurrentNode", self.ui, CT_BACKDROP)
+    self.currentNode:SetAnchor(TOPLEFT, self.ui, TOPLEFT, 0, 30)
+    self.currentNode:SetDimensions(self.ui:GetWidth(), 30)
+    self.currentNode:SetHidden(self.savedVars.hidden)
+	self.currentNode:SetCenterColor(0, 0, 0, .25)
+	self.currentNode:SetEdgeColor(0, 0, 0, .25)
+	self.currentNode:SetEdgeTexture(nil, 1, 1, 0, 0)
+
+    local nodeIcon = WindowManager:CreateControl("SurveyZoneListUICurrentNodeIcon", self.currentNode, CT_TEXTURE)
+    nodeIcon:SetDimensions(25, 25)
+    nodeIcon:SetAnchor(TOPLEFT, self.currentNode, TOPLEFT, 5, 3)
+    nodeIcon:SetTexture("/esoui/art/icons/poi/poi_crafting_complete.dds")
+
+    self.nodeCounter = WindowManager:CreateControl("SurveyZoneListUICurrentNodeCounterLabel", self.currentNode, CT_LABEL)
+    self.nodeCounter:SetAnchor(TOPLEFT, nodeIcon, TOPLEFT, 30, 3)
+    self.nodeCounter:SetText("0/6")
+    self.nodeCounter:SetFont("ZoFontGame")
+
+    local spotIcon = WindowManager:CreateControl("SurveyZoneListUICurrentSpotIcon", self.currentNode, CT_TEXTURE)
+    spotIcon:SetDimensions(30, 30)
+    spotIcon:SetAnchor(TOPLEFT, self.currentNode, TOPLEFT, 110, 3)
+    spotIcon:SetTexture("/esoui/art/treeicons/achievements_indexicon_summary_down.dds")
+
+    self.spotInfo = WindowManager:CreateControl("SurveyZoneListUICurrentNodeSpotInfo", self.currentNode, CT_LABEL)
+    self.spotInfo:SetAnchor(TOPLEFT, nodeIcon, TOPLEFT, 140, 3)
+    self.spotInfo:SetText("No info")
+    self.spotInfo:SetFont("ZoFontGame")
 end
 
 --[[
@@ -187,6 +238,44 @@ function SurveyZoneList.GUI:defineDisplayItemText(value)
 end
 
 --[[
+-- Return info about if 
+--
+-- @return bool
+--]]
+function SurveyZoneList.GUI:isDisplaySurvey()
+    return self.savedVars.displaySurvey
+end
+
+--[[
+-- Define 
+--
+-- @param bool value
+--]]
+function SurveyZoneList.GUI:defineDisplaySurvey(value)
+    self.savedVars.displaySurvey = value
+    self:refreshAll()
+end
+
+--[[
+-- Return info about 
+--
+-- @return bool
+--]]
+function SurveyZoneList.GUI:isDisplayTreasure()
+    return self.savedVars.displayTreasure
+end
+
+--[[
+-- Define 
+--
+-- @param bool value
+--]]
+function SurveyZoneList.GUI:defineDisplayTreasure(value)
+    self.savedVars.displayTreasure = value
+    self:refreshAll()
+end
+
+--[[
 -- Save the GUI's position to savedVariables
 --]]
 function SurveyZoneList.GUI:savePosition()
@@ -215,6 +304,7 @@ function SurveyZoneList.GUI:toggle()
     self.ui:SetHidden(self.savedVars.hidden)
     self.backUI:SetHidden(self.savedVars.hidden)
     self.title:SetHidden(self.savedVars.hidden)
+    self.currentNode:SetHidden(self.savedVars.hidden)
 
     if self.savedVars.hidden == true then
         self:hideAllItems()
@@ -237,7 +327,11 @@ function SurveyZoneList.GUI:refreshAll()
     for listIdx, zoneInfo in pairs(SurveyZoneList.Collect.orderedList) do
         local zoneName = zoneInfo.name
 
-        if zoneInfo.nbUnique > 0 then
+        if 
+            (self.savedVars.displaySurvey == true and zoneInfo.survey.nbUnique > 0)
+            or
+            (self.savedVars.displayTreasure == true and zoneInfo.treasure.nbUnique > 0)
+        then
             if self.itemList[idx] == nil then
                 self.itemList[idx] = SurveyZoneList.GUIItem:new()
             end
@@ -296,4 +390,32 @@ function SurveyZoneList.GUI:showAllItems()
             end
         end
     end
+end
+
+--[[
+-- Update the node counter value displayed
+--]]
+function SurveyZoneList.GUI:updateCounter()
+    self.nodeCounter:SetText(
+        zo_strformat(
+            "<<1>> / <<2>>",
+            SurveyZoneList.Recolt.counter,
+            SurveyZoneList.Recolt.maxNode
+        )
+    )
+end
+
+--[[
+-- Update the spot info displayed
+--]]
+function SurveyZoneList.GUI:updateSpotInfo()
+    local str = GetString(SI_SURVEYZONELIST_GUI_REMAINING)
+
+    if SurveyZoneList.Alerts.zoneQuantity == 0 then
+        str = GetString(SI_SURVEYZONELIST_GUI_GO_NEXT_ZONE)
+    elseif SurveyZoneList.Alerts.spotQuantity == 0 then
+        str = GetString(SI_SURVEYZONELIST_GUI_GO_NEXT_SPOT)
+    end
+
+    self.spotInfo:SetText(zo_strformat(str, SurveyZoneList.Alerts.spotQuantity))
 end

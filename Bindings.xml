@@ -2,7 +2,7 @@
 	<Layer name="SI_KEYBINDINGS_LAYER_GENERAL">
 		<Category name="Survey Zone List">
 			<Action name="SURVEYZONELIST_TOGGLE">
-				<Up>SurveyZoneList.Events.keybindingsToggle()</Up>
+				<Up>SurveyZoneList.Events.keybindingsToggleGUI()</Up>
 			</Action>
 		</Category>
 	</Layer>
