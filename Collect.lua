@@ -21,6 +21,7 @@ function SurveyZoneList.Collect:search()
     self.orderedList = {}
 
     local bagItems = GetBagSize(BAG_BACKPACK)
+	itemName = string.gsub(itemName, " ce ", " ")
     local itemZoneName = ""
 
     for slotIdx=0, bagItems, 1 do
