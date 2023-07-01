@@ -119,6 +119,8 @@ function SurveyZoneList.Interaction:isSurveyNode(action, interactionName)
 
     local nodeNameList = SurveyZoneList.lang.nodeName
 
+    -- d(zo_strformat("<<1>>", interactionName:lower()))
+
     for nodeNameIdx, nodeNamePartToFind in pairs(nodeNameList) do
         if string.find(interactionName:lower(), nodeNamePartToFind) then
             return true
