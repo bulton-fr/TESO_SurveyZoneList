@@ -19,7 +19,8 @@ SurveyZoneList.lang.nodeName = {
     "^залежи",
     "^ловушка меховщика$",
     "^богатый",
-    "^многогранный"
+    "^многогранный",
+    "^bulging herbalist's satchel$", --Apocrypha : "сумка травника" / "Bulging Herbalist's Satchel" (#WTF)
     
     -- bois
     -- Survey : [03:58] [03:58] Рубить / Нетронутый багряный ясень

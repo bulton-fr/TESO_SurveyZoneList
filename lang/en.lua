@@ -68,9 +68,9 @@ SurveyZoneList.lang.surveyAction = {
 
 SurveyZoneList.lang.nodeName = {
     -- clothier & alchemist (couture & alchimie)
-    "^bulging",
+    "^bulging", -- Apocrypha : "Herbalist's Satchel" / "Bulging Herbalist's Satchel"
     "^lush",
-    "^plush",
+    "^plush", -- Apocrypha : "Torn Cloth" / "Plush Torn Cloth"
     "^furrier's trap$",
 
     -- Enchanting (enchantement)
