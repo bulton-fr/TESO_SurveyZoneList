@@ -68,6 +68,8 @@ SurveyZoneList.lang.nodeName = {
     "luxuriant$",
     "luxuriante$",
     "^piège du fourreur$",
+    "de peluche ", -- Apocrypha : "Tissu déchiré" / "Tissu de peluche déchiré"
+    "débordante$", -- Apocrypha : "Besace d'herboriste" / "Besace d'herboriste débordante"
 
     -- enchantement
     "protéiforme$",

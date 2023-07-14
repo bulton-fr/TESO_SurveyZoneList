@@ -15,9 +15,12 @@ SurveyZoneList.lang.surveyAction = {
 SurveyZoneList.lang.nodeName = {
     "^hervorragendes",
     "^buschige",
+    "plüschfetzen$", --Apocrypha : "Zerrissener Stoff" / "Zerrissener Plüschfetzen"
     "^reichhaltiges",
     "^kürschnerfalle$",
-    "^proteischer"
+    "^proteischer",
+    "^prall gefüllter" -- Apocrypha : "Beutel eines Kräuterkundigen" / "Prall gefüllter Beutel eines Kräuterkundigen"
+
     -- bois
     -- Survey : [03:16] Hacken / Hervorragendes Rubineschenholz
     -- Normal : [03:23] Hacken / Rubinesche
